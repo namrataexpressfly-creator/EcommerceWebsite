@@ -1,0 +1,59 @@
+/* Per-variant "Stock by Warehouse" panel in the product form + discount field hints */
+
+.combo-wh-toggle {
+  display: block;
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brand);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.combo-wh-toggle:disabled {
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+.combo-wh-panel {
+  margin: 2px 0 6px;
+  padding: 14px 16px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg, 6px);
+  background: var(--surface);
+}
+
+.combo-wh-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.combo-wh-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.field-hint,
+.field-error {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+}
+
+.field-hint {
+  color: var(--ink-faint);
+}
+
+.field-error {
+  color: var(--danger);
+  font-weight: 500;
+}

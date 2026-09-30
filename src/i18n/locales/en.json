@@ -1,0 +1,74 @@
+{
+  "common": {
+    "language": "Language",
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme",
+    "logOut": "Log out"
+  },
+  "store": {
+    "freeDelivery": "Free delivery on orders above {{amount}}",
+    "nav": {
+      "shop": "Shop",
+      "trackOrder": "Track order",
+      "aboutUs": "About us",
+      "contactUs": "Contact us"
+    },
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "login": "Login",
+    "account": {
+      "defaultLabel": "Account",
+      "hello": "Hello, {{name}}",
+      "helloFallback": "there",
+      "myProfile": "My Profile",
+      "orders": "Orders",
+      "wishlist": "Wishlist",
+      "savedAddresses": "Saved Addresses",
+      "logout": "Logout"
+    },
+    "notLive": {
+      "title": "This store isn't live yet",
+      "desc": "The seller's verification is still pending. Please check back soon."
+    },
+    "themePreviewBanner": "Previewing a theme — nothing has been saved. Close this tab to return to your live site."
+  },
+  "dashboard": {
+    "brand": "Expressfly",
+    "sections": {
+      "catalog": "Catalog",
+      "sales": "Sales",
+      "marketing": "Marketing",
+      "support": "Support",
+      "account": "Account"
+    },
+    "nav": {
+      "overview": "Overview",
+      "products": "Products",
+      "productVariants": "Product Variants",
+      "categories": "Categories",
+      "warehouses": "Warehouses",
+      "orders": "Orders",
+      "cartActivity": "Cart activity",
+      "coupons": "Coupons",
+      "returns": "Returns",
+      "wallet": "Wallet",
+      "homepageSlider": "Homepage slider",
+      "customers": "Customers",
+      "supportTickets": "Support tickets",
+      "kyc": "KYC",
+      "paymentMethods": "Payment methods",
+      "storeSettings": "Store settings"
+    },
+    "viewStorefront": "View storefront ↗",
+    "viewStorefrontLocked": "View storefront (locked)",
+    "viewStorefrontLockedTitle": "Your storefront is only visible once KYC is approved",
+    "signedInAs": "Signed in as {{name}}",
+    "kycBanner": {
+      "not_submitted": "Complete your KYC to unlock your dashboard. Until then, this is the only page available.",
+      "pending": "Your KYC is under review. Your dashboard unlocks as soon as it's approved.",
+      "rejected": "Your KYC was rejected. Fix the details below and resubmit to unlock your dashboard."
+    }
+  }
+}

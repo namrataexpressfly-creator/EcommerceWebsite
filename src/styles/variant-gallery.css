@@ -1,0 +1,130 @@
+/* Variant thumbnails in the product view table + the gallery they open (components/VariantGallery.jsx) */
+.variant-thumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.variant-thumbs img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid var(--line, #e6e2d8);
+  background: var(--bg, #faf8f3);
+}
+.variant-thumbs:hover img {
+  border-color: var(--ink, #15140f);
+}
+.variant-thumbs-more {
+  min-width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--line-soft, #f0ede4);
+  color: var(--ink-soft, #6b6a63);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.vg {
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 1px solid var(--line, #e6e2d8);
+  border-radius: var(--radius-lg, 6px);
+  background: var(--surface, #fff);
+  outline: none;
+}
+.vg:focus-visible {
+  border-color: var(--ink, #15140f);
+}
+.vg-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.vg-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vg-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: var(--line-soft, #f0ede4);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.vg-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 280px;
+  border-radius: var(--radius, 4px);
+  background: var(--bg, #faf8f3);
+  overflow: hidden;
+}
+.vg-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.vg-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.vg-prev {
+  left: 10px;
+}
+.vg-next {
+  right: 10px;
+}
+.vg-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.vg-thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 2px solid var(--line-soft, #f0ede4);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg, #faf8f3);
+  cursor: pointer;
+}
+.vg-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vg-thumb.is-active {
+  border-color: var(--ink, #15140f);
+}

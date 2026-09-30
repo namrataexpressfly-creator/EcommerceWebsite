@@ -1,0 +1,74 @@
+{
+  "common": {
+    "language": "भाषा",
+    "switchToDark": "डार्क थीमवर स्विच करा",
+    "switchToLight": "लाइट थीमवर स्विच करा",
+    "logOut": "लॉग आउट"
+  },
+  "store": {
+    "freeDelivery": "{{amount}} पेक्षा जास्त ऑर्डरवर मोफत डिलिव्हरी",
+    "nav": {
+      "shop": "शॉप",
+      "trackOrder": "ऑर्डर ट्रॅक करा",
+      "aboutUs": "आमच्याबद्दल",
+      "contactUs": "संपर्क करा"
+    },
+    "openMenu": "मेनू उघडा",
+    "closeMenu": "मेनू बंद करा",
+    "wishlist": "विशलिस्ट",
+    "cart": "कार्ट",
+    "login": "लॉगिन",
+    "account": {
+      "defaultLabel": "खाते",
+      "hello": "नमस्कार, {{name}}",
+      "helloFallback": "तुम्ही",
+      "myProfile": "माझी प्रोफाइल",
+      "orders": "ऑर्डर्स",
+      "wishlist": "विशलिस्ट",
+      "savedAddresses": "जतन केलेले पत्ते",
+      "logout": "लॉगआउट"
+    },
+    "notLive": {
+      "title": "हे स्टोअर अजून लाइव्ह नाही",
+      "desc": "विक्रेत्याची पडताळणी अद्याप प्रलंबित आहे. कृपया लवकरच पुन्हा तपासा."
+    },
+    "themePreviewBanner": "थीमचे पूर्वावलोकन सुरू आहे — काहीही जतन केलेले नाही. तुमच्या लाइव्ह साइटवर परत जाण्यासाठी हा टॅब बंद करा."
+  },
+  "dashboard": {
+    "brand": "Expressfly",
+    "sections": {
+      "catalog": "कॅटलॉग",
+      "sales": "विक्री",
+      "marketing": "मार्केटिंग",
+      "support": "सहाय्य",
+      "account": "खाते"
+    },
+    "nav": {
+      "overview": "आढावा",
+      "products": "उत्पादने",
+      "productVariants": "उत्पादन प्रकार",
+      "categories": "श्रेणी",
+      "warehouses": "गोदामे",
+      "orders": "ऑर्डर्स",
+      "cartActivity": "कार्ट अ‍ॅक्टिव्हिटी",
+      "coupons": "कूपन",
+      "returns": "परतावा",
+      "wallet": "वॉलेट",
+      "homepageSlider": "होमपेज स्लायडर",
+      "customers": "ग्राहक",
+      "supportTickets": "सहाय्य तिकिटे",
+      "kyc": "केवायसी",
+      "paymentMethods": "पेमेंट पद्धती",
+      "storeSettings": "स्टोअर सेटिंग्ज"
+    },
+    "viewStorefront": "स्टोअरफ्रंट पहा ↗",
+    "viewStorefrontLocked": "स्टोअरफ्रंट पहा (लॉक)",
+    "viewStorefrontLockedTitle": "केवायसी मंजूर झाल्यावरच तुमचे स्टोअरफ्रंट दिसेल",
+    "signedInAs": "{{name}} म्हणून साइन इन",
+    "kycBanner": {
+      "not_submitted": "तुमचे डॅशबोर्ड अनलॉक करण्यासाठी केवायसी पूर्ण करा. तोपर्यंत हेच एकमेव उपलब्ध पान आहे.",
+      "pending": "तुमचे केवायसी पुनरावलोकनाधीन आहे. मंजूर होताच तुमचे डॅशबोर्ड अनलॉक होईल.",
+      "rejected": "तुमचे केवायसी नाकारले गेले आहे. डॅशबोर्ड अनलॉक करण्यासाठी खालील तपशील दुरुस्त करून पुन्हा सबमिट करा."
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "common": {
+    "language": "भाषा",
+    "switchToDark": "डार्क थीम पर स्विच करें",
+    "switchToLight": "लाइट थीम पर स्विच करें",
+    "logOut": "लॉग आउट"
+  },
+  "store": {
+    "freeDelivery": "{{amount}} से ऊपर के ऑर्डर पर मुफ़्त डिलीवरी",
+    "nav": {
+      "shop": "शॉप",
+      "trackOrder": "ऑर्डर ट्रैक करें",
+      "aboutUs": "हमारे बारे में",
+      "contactUs": "संपर्क करें"
+    },
+    "openMenu": "मेनू खोलें",
+    "closeMenu": "मेनू बंद करें",
+    "wishlist": "विशलिस्ट",
+    "cart": "कार्ट",
+    "login": "लॉगिन",
+    "account": {
+      "defaultLabel": "खाता",
+      "hello": "नमस्ते, {{name}}",
+      "helloFallback": "वहाँ",
+      "myProfile": "मेरी प्रोफ़ाइल",
+      "orders": "ऑर्डर",
+      "wishlist": "विशलिस्ट",
+      "savedAddresses": "सहेजे गए पते",
+      "logout": "लॉगआउट"
+    },
+    "notLive": {
+      "title": "यह स्टोर अभी लाइव नहीं है",
+      "desc": "विक्रेता का सत्यापन अभी भी लंबित है। कृपया जल्द ही फिर से देखें।"
+    },
+    "themePreviewBanner": "थीम का पूर्वावलोकन हो रहा है — कुछ भी सहेजा नहीं गया है। अपनी लाइव साइट पर लौटने के लिए यह टैब बंद करें।"
+  },
+  "dashboard": {
+    "brand": "Expressfly",
+    "sections": {
+      "catalog": "कैटलॉग",
+      "sales": "बिक्री",
+      "marketing": "मार्केटिंग",
+      "support": "सहायता",
+      "account": "खाता"
+    },
+    "nav": {
+      "overview": "अवलोकन",
+      "products": "उत्पाद",
+      "productVariants": "उत्पाद वेरिएंट",
+      "categories": "श्रेणियाँ",
+      "warehouses": "गोदाम",
+      "orders": "ऑर्डर",
+      "cartActivity": "कार्ट गतिविधि",
+      "coupons": "कूपन",
+      "returns": "रिटर्न",
+      "wallet": "वॉलेट",
+      "homepageSlider": "होमपेज स्लाइडर",
+      "customers": "ग्राहक",
+      "supportTickets": "सहायता टिकट",
+      "kyc": "केवाईसी",
+      "paymentMethods": "भुगतान के तरीके",
+      "storeSettings": "स्टोर सेटिंग्स"
+    },
+    "viewStorefront": "स्टोरफ्रंट देखें ↗",
+    "viewStorefrontLocked": "स्टोरफ्रंट देखें (लॉक)",
+    "viewStorefrontLockedTitle": "केवाईसी स्वीकृत होने पर ही आपका स्टोरफ्रंट दिखाई देगा",
+    "signedInAs": "{{name}} के रूप में साइन इन",
+    "kycBanner": {
+      "not_submitted": "अपना डैशबोर्ड अनलॉक करने के लिए केवाईसी पूरा करें। तब तक यही एकमात्र उपलब्ध पेज है।",
+      "pending": "आपका केवाईसी समीक्षाधीन है। स्वीकृत होते ही आपका डैशबोर्ड अनलॉक हो जाएगा।",
+      "rejected": "आपका केवाईसी अस्वीकृत कर दिया गया है। डैशबोर्ड अनलॉक करने के लिए नीचे दिए गए विवरण ठीक करें और फिर से सबमिट करें।"
+    }
+  }
+}

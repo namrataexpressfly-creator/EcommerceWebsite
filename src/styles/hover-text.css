@@ -1,0 +1,41 @@
+
+.ht {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--ht-lines, 2);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.ht-tip {
+  position: fixed;
+  z-index: 2000;
+  max-width: min(320px, calc(100vw - 16px));
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(58, 58, 58, 0.96);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+}
+
+.ht-tip::after {
+  content: "";
+  position: absolute;
+  left: var(--ht-arrow, 50%);
+  margin-left: -6px;
+  border: 6px solid transparent;
+}
+.ht-tip.is-above::after {
+  top: 100%;
+  border-top-color: rgba(58, 58, 58, 0.96);
+}
+.ht-tip.is-below::after {
+  bottom: 100%;
+  border-bottom-color: rgba(58, 58, 58, 0.96);
+}
