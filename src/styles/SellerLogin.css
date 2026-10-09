@@ -1,0 +1,315 @@
+/* Seller login. Save as src/styles/SellerLogin.css */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+.sl-page {
+  --sl-navy: #1a2a5c;
+  --sl-purple: #6a45f5;
+  --sl-purple-2: #8a5cff;
+  --sl-border: #b9c1d9;
+  --sl-danger: #b3402f;
+
+  min-height: 100vh;
+  padding: 32px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--sl-navy);
+  background: #fff;
+}
+
+.sl-page,
+.sl-page *,
+.sl-page *::before,
+.sl-page *::after {
+  box-sizing: border-box;
+}
+
+.sl-layout {
+  width: 100%;
+  max-width: 1040px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ---------- Illustration (image) ---------- */
+.sl-art {
+  display: flex;
+  justify-content: center;
+}
+
+.sl-art img {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  user-select: none;
+}
+
+/* ---------- Form ---------- */
+.sl-form {
+  width: 100%;
+  max-width: 400px;
+  justify-self: center;
+}
+
+.sl-title {
+  margin: 0 0 32px;
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--sl-navy);
+}
+
+.sl-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  margin-bottom: 18px;
+  border: 1.5px solid var(--sl-border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(26, 42, 92, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.sl-field:focus-within {
+  border-color: var(--sl-purple);
+  box-shadow: 0 0 0 3px rgba(106, 69, 245, 0.15);
+}
+
+.sl-ico {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-left: 14px;
+  color: var(--sl-navy);
+}
+
+.sl-field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 14px 0 12px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--sl-navy);
+}
+
+.sl-field input::placeholder {
+  color: #5d6786;
+}
+
+.sl-eye {
+  flex-shrink: 0;
+  width: 38px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: #5d6786;
+  cursor: pointer;
+}
+
+.sl-eye:hover {
+  color: var(--sl-navy);
+}
+
+.sl-eye svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Remember / Forgot row */
+.sl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+}
+
+.sl-row a {
+  color: var(--sl-navy);
+  text-decoration: none;
+}
+
+.sl-row a:hover,
+.sl-register a:hover {
+  text-decoration: underline;
+}
+
+.sl-remember {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sl-remember input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sl-check {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--sl-border);
+  background: #fff;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.sl-check svg {
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+}
+
+.sl-remember input:checked + .sl-check {
+  background: var(--sl-purple);
+  border-color: var(--sl-purple);
+}
+
+.sl-remember input:checked + .sl-check svg {
+  opacity: 1;
+}
+
+.sl-remember input:focus-visible + .sl-check {
+  outline: 2px solid var(--sl-purple);
+  outline-offset: 2px;
+}
+
+.sl-error {
+  margin-top: 18px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(179, 64, 47, 0.3);
+  background: rgba(179, 64, 47, 0.07);
+  color: var(--sl-danger);
+  font-size: 0.82rem;
+}
+
+/* ---------- Login button (colours hardcoded so it always shows) ---------- */
+.sl-submit {
+  display: block;
+  width: 130px;
+  height: 38px;
+  margin: 34px auto 0;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #8a5cff, #6a45f5);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 8px 18px -8px rgba(106, 69, 245, 0.8);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.sl-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px -8px rgba(106, 69, 245, 0.85);
+}
+
+.sl-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.sl-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.sl-register {
+  margin: 22px 0 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #5d6786;
+}
+
+.sl-register a {
+  color: var(--sl-purple);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .sl-layout {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .sl-art {
+    display: none;
+  }
+}
+
+
+
+/* ---------- Forgot password extras ---------- */
+.sl-lead {
+  margin: -12px 0 28px;
+  text-align: center;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: #5d6786;
+}
+
+.sl-lead strong {
+  color: var(--sl-navy);
+  word-break: break-all;
+}
+
+.sl-title-left {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.sl-submit-wide {
+  width: 100%;
+  max-width: 220px;
+}
+
+.sl-success {
+  text-align: center;
+}
+
+.sl-success .sl-lead {
+  margin-top: 0;
+}
+
+.sl-success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8a5cff, #6a45f5);
+  box-shadow: 0 12px 24px -10px rgba(106, 69, 245, 0.8);
+}
+
+.sl-success-icon svg {
+  width: 30px;
+  height: 30px;
+}

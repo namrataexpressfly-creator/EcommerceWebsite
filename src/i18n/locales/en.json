@@ -41,7 +41,8 @@
       "sales": "Sales",
       "marketing": "Marketing",
       "support": "Support",
-      "account": "Account"
+      "account": "Account",
+      "developer": "Developer"
     },
     "nav": {
       "overview": "Overview",
@@ -59,7 +60,8 @@
       "supportTickets": "Support tickets",
       "kyc": "KYC",
       "paymentMethods": "Payment methods",
-      "storeSettings": "Store settings"
+      "storeSettings": "Store settings",
+      "apiReference": "API reference"
     },
     "viewStorefront": "View storefront ↗",
     "viewStorefrontLocked": "View storefront (locked)",

@@ -1,0 +1,58 @@
+/* Seller > Developer (API reference). Styles for src/pages/seller/Developer.jsx */
+.dev-page { max-width: 1280px; min-width: 0; }
+.dev-page h1 { margin: 0; }
+
+.dev-base-card { display: inline-flex; flex-direction: column; gap: 6px; margin: 18px 0 8px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-sm); }
+.dev-base-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dev-base-row code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.95rem; font-weight: 600; color: var(--brand-dark); }
+
+.dev-layout { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 18px; }
+.dev-side-nav { position: sticky; top: 90px; display: flex; flex-direction: column; gap: 2px; }
+.dev-side-link { display: block; padding: 8px 12px; border-radius: 8px; color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+.dev-side-link:hover { background: var(--brand-soft); color: var(--brand-dark); }
+.dev-side-link-active, .dev-side-link-active:hover { background: var(--brand-soft); color: var(--brand-dark); font-weight: 700; box-shadow: inset 3px 0 0 var(--brand); }
+
+.dev-content { min-width: 0; }
+.dev-group { padding: 8px 0 28px; scroll-margin-top: 90px; }
+.dev-group > h2 { margin: 0 0 6px; font-size: 1.5rem; }
+.dev-group > p { margin: 0 0 18px; }
+
+.dev-endpoint { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin-bottom: 20px; box-shadow: var(--shadow-sm); min-width: 0; scroll-margin-top: 90px; }
+.dev-endpoint h3 { margin: 12px 0 6px; font-size: 1.15rem; }
+.dev-endpoint-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dev-path { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92rem; font-weight: 600; word-break: break-all; }
+.dev-desc { margin: 0 0 14px; line-height: 1.6; color: var(--ink-soft); font-size: 0.93rem; }
+
+.dev-method { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 6px; }
+.dev-method-get { background: #e2f5e9; color: #1c6b3a; }
+.dev-method-post { background: #e3f1ff; color: #0b5cad; }
+.dev-method-put { background: #fdf0d8; color: #93650f; }
+.dev-method-delete { background: #fbeae7; color: #b3402f; }
+
+.dev-params { overflow-x: auto; margin-bottom: 16px; border: 1px solid var(--line-soft); border-radius: 10px; }
+.dev-params-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.dev-params-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); background: var(--brand-soft); padding: 9px 12px; }
+.dev-params-table td { padding: 9px 12px; border-top: 1px solid var(--line-soft); vertical-align: top; }
+.dev-params-table code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; background: var(--brand-soft); padding: 1px 6px; border-radius: 5px; }
+
+.dev-example { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.dev-example-col { min-width: 0; background: #1b1f27; border-radius: 10px; overflow: hidden; }
+.dev-tabs { display: flex; align-items: center; gap: 4px; padding: 8px 12px; background: #252a34; }
+.dev-tabs button { background: transparent; border: 0; color: #aab1c0; padding: 4px 11px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+.dev-tabs button.dev-tab-active { background: #3a4150; color: #fff; }
+.dev-tab-static { color: #aab1c0; font-size: 0.8rem; font-weight: 600; padding: 4px 4px; }
+
+.dev-code-block { position: relative; }
+.dev-code-block pre { margin: 0; padding: 14px 16px; overflow: auto; max-height: 380px; font-size: 0.8rem; line-height: 1.55; color: #cfe8d5; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.dev-code-block code { font-family: inherit; white-space: pre; }
+.dev-copy-btn { position: absolute; top: 8px; right: 10px; z-index: 1; background: #3a4150; color: #fff; border: 0; border-radius: 6px; font-size: 0.72rem; padding: 3px 10px; cursor: pointer; }
+.dev-copy-btn:hover { background: #4a5263; }
+.dev-base-row .dev-copy-btn { position: static; background: var(--brand); }
+
+.dev-steps { padding-left: 20px; line-height: 1.7; font-size: 0.93rem; margin: 12px 0; }
+
+@media (max-width: 1100px) { .dev-example { grid-template-columns: 1fr; } }
+@media (max-width: 800px) {
+  .dev-layout { grid-template-columns: 1fr; }
+  .dev-side-nav { position: static; flex-direction: row; flex-wrap: wrap; }
+}

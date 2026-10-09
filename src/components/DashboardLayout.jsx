@@ -117,6 +117,13 @@ const Icon = {
       />
     </svg>
   ),
+  developer: (p) => (
+    <svg viewBox="0 0 20 20" width="17" height="17" fill="none" {...p}>
+      <path d="M7 6.2 2.8 10 7 13.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M13 6.2 17.2 10 13 13.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11.3 4.3 8.7 15.7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  ),
 };
 
 function getSections(t) {
@@ -163,6 +170,7 @@ function getSections(t) {
         { to: "/seller/settings", label: t("dashboard.nav.storeSettings"), icon: Icon.settings },
       ],
     },
+
   ];
 }
 
@@ -182,8 +190,7 @@ export default function DashboardLayout() {
   }
 
   const sections = getSections(t);
-  // Same set of links flattened, kept for the KYC-locked view which only
-  // ever shows the single KYC item.
+
   const allLinks = sections.flatMap((s) => s.items);
 
   const KYC_BANNER = {

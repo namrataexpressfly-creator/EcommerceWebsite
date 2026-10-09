@@ -4,6 +4,7 @@ import { useAdminAuth } from "../../context/AdminAuthContext";
 import AdminLayout from "./AdminLayout";
 import Pagination from "../../components/Pagination";
 import usePagination from "../../hooks/usePagination";
+import { AdminLoading } from "../../components/AdminUi";
 
 function timeAgo(dateStr) {
   if (!dateStr) return "Never";
@@ -73,7 +74,7 @@ export default function AdminCustomers() {
         {error && <div className="adm-error adm-error-banner">{error}</div>}
 
         {loading ? (
-          <div className="adm-empty">Loading customers…</div>
+          <AdminLoading label="Loading customers…" />
         ) : filtered.length === 0 ? (
           <div className="adm-empty">
             <p>No customers match that search.</p>

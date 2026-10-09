@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import client, { resolveMediaUrl } from "../api/client";
+import client, { getStoreFilters, resolveMediaUrl } from "../api/client";
 import { CartProvider, useCart } from "../context/CartContext";
 import { CustomerAuthProvider, useCustomerAuth } from "../context/CustomerAuthContext";
 import { useStoreSlug } from "../context/StoreSlugContext";
@@ -16,7 +16,9 @@ import { FREE_SHIPPING_THRESHOLD } from "../utils/shop";
 import { getLayoutPreset } from "../utils/layoutPresets";
 import { SOCIAL_LABELS, activeSocialLinks, normalizeSocialUrl } from "../utils/social";
 import { SocialIcon } from "./SocialIcons";
+import useStoreMotion from "../hooks/useStoreMotion";
 import "../styles/storefront-pro.css";
+import "../styles/storefront-motion.css";
 
 function AccountMenu({ basePath }) {
   const { isLoggedIn, customer, logout, refreshAddresses } = useCustomerAuth();
@@ -91,6 +93,49 @@ function AccountMenu({ basePath }) {
   );
 }
 
+function CategoriesMenu({ categories, basePath }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (e) => ref.current && !ref.current.contains(e.target) && setOpen(false);
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  if (!categories.length) return null;
+
+  return (
+    <div className="sf-cat-menu" ref={ref}>
+      <button type="button" className="sf-cat-btn" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        Categories <ChevronDownIcon />
+      </button>
+      {open && (
+        <div className="sf-cat-panel">
+          {categories.map((c) => (
+            <Link key={c._id} to={`${basePath}/category/${encodeURIComponent(c.slug)}`} className="sf-cat-item">
+              {c.image ? <img src={resolveMediaUrl(c.image)} alt="" /> : <span className="sf-cat-initial">{c.name?.[0] || "?"}</span>}
+              <span>{c.name}</span>
+            </Link>
+          ))}
+          <Link to={`${basePath}/categories`} className="sf-cat-all">View all categories</Link>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MenuIcon({ open, size = 22 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -99,7 +144,7 @@ function MenuIcon({ open, size = 22 }) {
   );
 }
 
-function StoreNav({ storeName, logoUrl, socialLinks }) {
+function StoreNav({ storeName, logoUrl, socialLinks, categories }) {
   const { basePath } = useStoreSlug();
   const { totalQuantity } = useCart();
   const { customer } = useCustomerAuth();
@@ -169,6 +214,8 @@ function StoreNav({ storeName, logoUrl, socialLinks }) {
             {logoUrl ? <img src={resolveMediaUrl(logoUrl)} alt={storeName} className="brand-logo" /> : storeName}
           </Link>
 
+          <CategoriesMenu categories={categories} basePath={basePath} />
+
           <nav className="store-nav-links" aria-label="Main">
             {navLinks}
           </nav>
@@ -232,14 +279,21 @@ export default function StoreLayout() {
   const [logoUrl, setLogoUrl] = useState("");
   const [theme, setTheme] = useState(null);
   const [socialLinks, setSocialLinks] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [searchParams] = useSearchParams();
   const [notLive, setNotLive] = useState(false);
   const [checked, setChecked] = useState(false);
+  const shellRef = useRef(null);
+  const { pathname } = useLocation();
+  useStoreMotion(shellRef, pathname, checked && notLive); // GSAP motion layer (hooks/useStoreMotion.js)
 
   useEffect(() => {
     if (!slug) return;
     setChecked(false);
     setNotLive(false);
+    getStoreFilters(slug)
+      .then((d) => setCategories(d?.categories || []))
+      .catch(() => setCategories([]));
     client
       .get(`/store/${slug}`)
       .then(({ data }) => {
@@ -301,7 +355,9 @@ export default function StoreLayout() {
       <CartProvider>
         <div
           className="store-shell"
+          ref={shellRef}
           style={themeToCssVars(effectiveTheme, isDark)}
+          data-layout={effectiveTheme?.layout_style || "marketplace"}
           data-card-style={layout.cardStyle}
           data-nav-style={layout.navStyle}
           data-hero-style={layout.heroStyle}
@@ -311,7 +367,7 @@ export default function StoreLayout() {
               {t("store.themePreviewBanner")}
             </div>
           )}
-          <StoreNav storeName={storeName} logoUrl={logoUrl} socialLinks={socialLinks} />
+          <StoreNav storeName={storeName} logoUrl={logoUrl} socialLinks={socialLinks} categories={categories} />
           <main className="store-main">
             <Outlet />
           </main>

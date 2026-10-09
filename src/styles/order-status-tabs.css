@@ -1,0 +1,5 @@
+/* Orders page: status filter tabs (own file so it cannot clash with plugins.css) */
+.order-status-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 14px; }
+.order-status-tabs button { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 6px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; text-transform: capitalize; font-family: inherit; }
+.order-status-tabs button:hover { border-color: var(--brand); }
+.order-status-tabs button.active { background: var(--brand); color: #fff; border-color: var(--brand); }

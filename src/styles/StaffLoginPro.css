@@ -1,0 +1,169 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap");
+
+.stf-page {
+  --b1: #1e40af;
+  --b2: #2563eb;
+  --b3: #38a3f5;
+  --ink: #0f1c33;
+  --soft: #62708a;
+  --line: #e0e7f3;
+  --danger: #b3402f;
+  --rgb: 37, 99, 235;
+  --page: #f5f8fe;
+  --panel: linear-gradient(150deg, #eaf2ff 0%, #dfeaff 45%, #eaf6ff 100%);
+  --blob-a: #bfd7ff;
+  --blob-b: #b8ecff;
+  --field-hover: #c8d5ea;
+  --eye-hover: #eef3fc;
+
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--page);
+}
+.stf-page, .stf-page *, .stf-page *::before, .stf-page *::after { box-sizing: border-box; }
+
+.stf-brand {
+  position: relative; overflow: hidden; padding: 56px 64px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+}
+.stf-blob { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; }
+.stf-blob-a { width: 360px; height: 360px; background: var(--blob-a); top: -110px; right: -90px; opacity: 0.8; }
+.stf-blob-b { width: 300px; height: 300px; background: var(--blob-b); bottom: -120px; left: -70px; opacity: 0.7; }
+.stf-grid {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.09;
+  background-image: linear-gradient(var(--b2) 1px, transparent 1px), linear-gradient(90deg, var(--b2) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 30% 40%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 0%, transparent 70%);
+}
+
+.stf-logo-mark {
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--b2), var(--b3)); font-family: "Fraunces", Georgia, serif; font-size: 1.3rem;
+  box-shadow: 0 10px 22px -10px rgba(var(--rgb), 0.65);
+}
+.stf-tag {
+  margin-left: 4px; font-size: 0.72rem; font-weight: 600; color: var(--b2); background: #fff; border: 1px solid var(--line);
+  padding: 4px 10px; border-radius: 999px;
+}
+.stf-hero { position: relative; max-width: 520px; }
+.stf-headline {
+  font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: clamp(2.1rem, 3.4vw, 3.1rem);
+  line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 18px;
+}
+.stf-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; }
+.stf-word > span { display: inline-block; will-change: transform; }
+.stf-lead { color: var(--soft); line-height: 1.65; margin: 0 0 28px; max-width: 440px; }
+.stf-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.stf-points li { display: flex; align-items: center; gap: 12px; font-size: 0.94rem; }
+.stf-tick { width: 24px; height: 24px; border-radius: 50%; background: var(--b2); display: grid; place-items: center; flex: none; }
+.stf-tick svg { width: 13px; height: 13px; }
+.stf-chip {
+  position: absolute; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 14px;
+  font-size: 0.8rem; font-weight: 600; background: #fff; border: 1px solid var(--line); will-change: transform;
+  box-shadow: 0 14px 30px -14px rgba(var(--rgb), 0.35);
+}
+.stf-chip i { width: 8px; height: 8px; border-radius: 50%; background: #16a34a; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.16); }
+.stf-chip-1 { top: 16%; right: 8%; }
+.stf-chip-2 { bottom: 22%; right: 14%; }
+.stf-chip-2 i { background: var(--b2); box-shadow: 0 0 0 4px rgba(var(--rgb), 0.16); }
+.stf-foot { position: relative; font-size: 0.8rem; color: var(--soft); }
+
+.stf-side { display: flex; align-items: center; justify-content: center; padding: 40px 28px; }
+.stf-card {
+  width: 100%; max-width: 420px; background: #fff; border: 1px solid var(--line); border-radius: 22px;
+  padding: 40px 36px 30px; box-shadow: 0 30px 60px -34px rgba(var(--rgb), 0.28);
+}
+.stf-card h1 { font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: 1.9rem; letter-spacing: -0.02em; margin: 0 0 6px; }
+.stf-sub { margin: 0 0 26px; color: var(--soft); font-size: 0.93rem; }
+
+.stf-field { position: relative; margin-bottom: 16px; }
+.stf-field input {
+  width: 100%; height: 56px; padding: 22px 46px 8px 16px; font: inherit; font-size: 0.97rem; color: var(--ink);
+  background: #fafcff; border: 1.5px solid var(--line); border-radius: 14px; outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.stf-field input:hover { border-color: var(--field-hover); }
+.stf-field input:focus { border-color: var(--b2); background: #fff; box-shadow: 0 0 0 4px rgba(var(--rgb), 0.12); }
+.stf-field label {
+  position: absolute; left: 16px; top: 18px; font-size: 0.95rem; color: var(--soft); pointer-events: none;
+  transform-origin: left top; transition: transform 0.2s ease, color 0.2s ease;
+}
+.stf-field input:focus + label,
+.stf-field input:not(:placeholder-shown) + label { transform: translateY(-11px) scale(0.78); color: var(--b2); font-weight: 600; }
+.stf-eye {
+  position: absolute; right: 8px; top: 8px; width: 40px; height: 40px; border: 0; background: transparent;
+  border-radius: 10px; color: var(--soft); cursor: pointer; display: grid; place-items: center;
+}
+.stf-eye:hover { background: var(--eye-hover); color: var(--b2); }
+.stf-eye svg { width: 20px; height: 20px; }
+
+.stf-row { margin: 4px 0 22px; font-size: 0.88rem; }
+.stf-remember { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; color: var(--soft); user-select: none; }
+.stf-remember input { position: absolute; opacity: 0; pointer-events: none; }
+.stf-box { width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid #b9c7de; background: #fff; display: grid; place-items: center; transition: background 0.15s ease, border-color 0.15s ease; }
+.stf-box svg { width: 11px; height: 11px; opacity: 0; transition: opacity 0.15s ease; }
+.stf-remember input:checked + .stf-box { background: var(--b2); border-color: var(--b2); }
+.stf-remember input:checked + .stf-box svg { opacity: 1; }
+.stf-remember input:focus-visible + .stf-box { box-shadow: 0 0 0 4px rgba(var(--rgb), 0.18); }
+
+.stf-error { background: #fbeae7; color: var(--danger); border: 1px solid #f0cdc7; border-radius: 12px; padding: 11px 14px; font-size: 0.87rem; margin-bottom: 16px; }
+.stf-submit {
+  width: 100%; height: 54px; border: 0; border-radius: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+  font: inherit; font-weight: 600; font-size: 0.98rem; color: #fff; will-change: transform;
+  background: linear-gradient(135deg, var(--b2), var(--b3)); box-shadow: 0 14px 26px -12px rgba(var(--rgb), 0.7);
+}
+.stf-submit:disabled { opacity: 0.75; cursor: default; }
+.stf-submit svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+.stf-submit:hover:not(:disabled) svg { transform: translateX(4px); }
+.stf-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.4); border-top-color: #fff; animation: stf-rot 0.7s linear infinite; }
+@keyframes stf-rot { to { transform: rotate(360deg); } }
+.stf-foot-note { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 22px 0 0; font-size: 0.82rem; color: var(--soft); text-align: center; }
+.stf-foot-note svg { width: 14px; height: 14px; flex: none; }
+
+@media (max-width: 920px) {
+  .stf-page { grid-template-columns: 1fr; }
+  .stf-brand { padding: 28px 24px 30px; }
+  .stf-hero { margin-top: 26px; }
+  .stf-lead, .stf-points, .stf-chip, .stf-foot { display: none; }
+  .stf-headline { font-size: 1.8rem; margin: 0; }
+  .stf-side { padding: 28px 16px 40px; }
+  .stf-card { padding: 30px 22px 26px; }
+}
+
+
+.stf-theme-dev {
+  --b1: #b45309;
+  --b2: #ea6a0a;
+  --b3: #f5a524;
+  --ink: #2a1a0e;
+  --soft: #7a6657;
+  --line: #f0e2d4;
+  --rgb: 234, 106, 10;
+  --page: #fffaf5;
+  --panel: linear-gradient(150deg, #fff3e2 0%, #ffe8cf 45%, #fff0e4 100%);
+  --blob-a: #ffd9ae;
+  --blob-b: #ffcfb4;
+  --field-hover: #e6d2bd;
+  --eye-hover: #fdf1e4;
+}
+.stf-theme-dev .stf-field input { background: #fffcf9; }
+.stf-theme-dev .stf-box { border-color: #dfc8b0; }
+.stf-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.stf-logo img {
+  width: 180px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}

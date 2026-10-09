@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import ThemeToggle from "../../components/ThemeToggle";
 
-export default function AdminTopbar({ onRefresh, onMenu }) {
+export default function AdminTopbar({ onRefresh, onMenu, user, roleLabel = "Administrator", onLogout, logoutTo = "/admin/login" }) {
   const { admin, logout } = useAdminAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -18,11 +18,11 @@ export default function AdminTopbar({ onRefresh, onMenu }) {
   }, []);
 
   const handleLogout = () => {
-    logout();
-    navigate("/admin/login");
+    (onLogout || logout)();
+    navigate(logoutTo);
   };
 
-  const name = admin?.username || "Admin";
+  const name = (user || admin)?.username || "Admin";
 
   return (
     <header className="adm-topbar">
@@ -50,7 +50,7 @@ export default function AdminTopbar({ onRefresh, onMenu }) {
             <span className="adm-avatar">{name.charAt(0).toUpperCase()}</span>
             <span className="adm-profile-text">
               <strong>{name}</strong>
-              <small>Administrator</small>
+              <small>{roleLabel}</small>
             </span>
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="m6 9 6 6 6-6" />

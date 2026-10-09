@@ -1,9 +1,3 @@
-/* ==========================================================================
-   Storefront design layer
-   Everything is scoped to .store-shell and built from the seller's theme
-   variables (--brand, --ink, --bg, --surface, --radius...), so a seller's
-   colours, fonts and layout preset keep working. Loaded after index.css.
-   ========================================================================== */
 
 .store-shell {
   --container: 1240px;
@@ -11,9 +5,7 @@
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --sale: var(--danger, #b3402f);
   --main-pt: 28px;
-  /* --vw-full (window width without the scrollbar) is set on <html> by StoreLayout;
-     var(--vw-full, 100vw) falls back to 100vw before that runs. */
-  /* Left edge of the page container, so full-width banners can line their text up with it. */
+
   --hero-pad-x: max(var(--gutter), calc((var(--vw-full, 100vw) - var(--container)) / 2 + var(--gutter)));
   color: var(--ink);
   overflow-x: clip;
@@ -33,7 +25,7 @@
   max-width: 100%;
 }
 
-/* ---- Announcement bar ---------------------------------------------------- */
+
 .announce-bar {
   background: var(--ink);
   color: var(--bg);

@@ -5,11 +5,18 @@ import { Loading, ErrorBox, EmptyState, StatusBadge } from "../../components/Ui"
 import { formatMoney, formatDate, ORDER_STATUSES } from "../../utils/format";
 import Pagination from "../../components/Pagination";
 import HoverText from "../../components/HoverText";
+import ShipModal from "../../components/ShipModal";
+import "../../styles/plugins.css";
 import "../../styles/order-detail.css";
 import { DEFAULT_PAGE_SIZE } from "../../hooks/usePagination";
 
 const fullAddress = (a) =>
   a ? [a.line1, a.line2, a.city, a.state, a.pincode].filter(Boolean).join(", ") : "";
+
+const canShip = (o) =>
+  ["pending", "confirmed", "packed"].includes(o.status) &&
+  ["paid", "cod_pending"].includes(o.payment_status) &&
+  !o.shipment?.awb_number;
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -21,6 +28,7 @@ export default function Orders() {
   const [limit, setLimit] = useState(DEFAULT_PAGE_SIZE);
   const [searchText, setSearchText] = useState("");
   const [search, setSearch] = useState("");
+  const [shipOrderId, setShipOrderId] = useState(null);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -78,28 +86,40 @@ export default function Orders() {
           onChange={(e) => setSearchText(e.target.value)}
           aria-label="Search orders"
         />
-        <select
-          className="input"
-          value={status}
-          onChange={(e) => {
-            setStatus(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="">All statuses</option>
-          {ORDER_STATUSES.map((s) => (
-            <option key={s} value={s}>
-              {s.replace(/_/g, " ")}
-            </option>
-          ))}
-        </select>
+      </div>
+
+      <div className="plug-filters plug-filters--scroll" role="tablist" aria-label="Filter orders by status">
+        {["", ...ORDER_STATUSES].map((s) => (
+          <button
+            key={s || "all"}
+            type="button"
+            role="tab"
+            aria-selected={status === s}
+            className={`plug-pill${status === s ? " is-on" : ""}`}
+            onClick={() => {
+              setStatus(s);
+              setPage(1);
+            }}
+          >
+            {s ? s.replace(/_/g, " ") : "All"}
+          </button>
+        ))}
       </div>
 
       <ErrorBox message={error} />
+      {shipOrderId && (
+        <ShipModal orderId={shipOrderId} onClose={() => setShipOrderId(null)} onShipped={load} />
+      )}
       {loading ? (
         <Loading />
       ) : orders.length === 0 ? (
-        <EmptyState>{search ? "No orders match your search." : "No orders yet."}</EmptyState>
+        <EmptyState>
+          {search
+            ? "No orders match your search."
+            : status
+              ? `No ${status.replace(/_/g, " ")} orders.`
+              : "No orders yet."}
+        </EmptyState>
       ) : (
         <>
           <table className="data-table">
@@ -111,6 +131,7 @@ export default function Orders() {
                 <th>Total</th>
                 <th>Payment</th>
                 <th>Status</th>
+                <th>Action</th>
                 {/* <th>Update</th>
                 <th>Shipment</th> */}
               </tr>
@@ -144,6 +165,19 @@ export default function Orders() {
                   </td>
                   <td>
                     <StatusBadge status={o.status} />
+                  </td>
+                  <td>
+                    <div className="order-actions">
+                      <Link className="btn btn-ghost btn-sm" to={`/seller/orders/${o._id}`}>
+                        View
+                      </Link>
+                      {canShip(o) && (
+                        <button type="button" className="btn btn-primary btn-sm" onClick={() => setShipOrderId(o._id)}>
+                          Ship
+                        </button>
+                      )}
+                    </div>
+                    {o.shipment?.awb_number && <div className="muted small">AWB: {o.shipment.awb_number}</div>}
                   </td>
                   {/* <td>
                     <select

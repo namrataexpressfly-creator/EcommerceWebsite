@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { DEFAULT_SLUG } from "../api/client";
+import useLandingAnimations from "../hooks/useLandingAnimations";
 import "../styles/landing.css";
 
 const STORE = `/store/${DEFAULT_SLUG}`;
@@ -18,6 +20,8 @@ const FACTS = [
   ["Light & dark", "Language and theme switch for everyone"],
 ];
 
+const MARQUEE = ["Online payments", "Cash on delivery", "Variants", "Coupons", "Warehouses", "Order tracking", "Returns", "Your own domain"];
+
 const Title = ({ a, b }) => (
   <h2 className="lp-title">
     <b>{a}</b> <i>{b}</i>
@@ -25,15 +29,53 @@ const Title = ({ a, b }) => (
 );
 
 export default function Landing() {
+  const rootRef = useRef(null);
+  const navigate = useNavigate();
+  useLandingAnimations(rootRef, navigate);
+
   return (
-    <div className="lp">
+    <div className="lp" ref={rootRef}>
+      <div className="lp-progress" aria-hidden="true" />
+      <div className="lp-cursor" aria-hidden="true">
+        <span className="lp-cursor-ring"><i /></span>
+        <span className="lp-cursor-dot" />
+      </div>
+      <div className="lp-loader" aria-hidden="true">
+        <div className="lp-loader-bar"><i /></div>
+        <div className="lp-loader-in">
+          <div>
+
+            <span className="lp-loader-brand">
+  <img
+    src="/logo-Expressfly.png"
+    alt="ExpressFly Logistics"
+  />
+</span>
+            <small className="lp-loader-tag">Your store, ready in minutes</small>
+          </div>
+          <span className="lp-loader-count">000</span>
+        </div>
+      </div>
+
+      <div className="lp-curtain" aria-hidden="true">
+  <img
+    src="/logo-Expressfly.png"
+    alt=""
+  />
+</div>
       <header className="lp-nav">
-        <Link to="/" className="lp-brand"><span className="lp-logo">E</span>expressfly</Link>
+
+        <Link to="/" className="lp-brand">
+  <img
+    src="/logo-Expressfly.png"
+    alt="ExpressFly Logistics"
+  />
+</Link>
         <nav className="lp-links">
-          <a href="#features">What we provide</a>
-          <a href="#warehouses">Shipping</a>
-          <a href="#how">How it works</a>
-          <a href="#about">About us</a>
+          <a href="#features"><span data-text="What we provide">What we provide</span></a>
+          <a href="#warehouses"><span data-text="Shipping">Shipping</span></a>
+          <a href="#how"><span data-text="How it works">How it works</span></a>
+          <a href="#about"><span data-text="About us">About us</span></a>
         </nav>
         <div className="lp-nav-right">
           <Link to="/seller/login" className="lp-login">Log in</Link>
@@ -41,13 +83,55 @@ export default function Landing() {
         </div>
       </header>
 
+      <div id="lp-smooth-wrapper">
+      <div id="lp-smooth-content">
       <section className="lp-hero">
+        <div className="lp-orbs" data-speed="0.75" aria-hidden="true">
+          <span className="lp-orb lp-orb-a" />
+          <span className="lp-orb lp-orb-b" />
+        </div>
+        <div className="lp-hero-in">
         <h1><b>Be the next</b><br /><b>online seller</b> <i>creator</i></h1>
         <p>Dream big and build fast on Expressfly.<br />Your own store website, ready in minutes.</p>
         <div className="lp-cta">
           <Link to="/seller/register" className="lp-pill lp-pill-white lp-lg">Start for free</Link>
           <Link to={STORE} className="lp-pill lp-pill-line lp-lg"><span className="lp-play">▶</span> See a demo store</Link>
         </div>
+        </div>
+
+        <div className="lp-float lp-float-1" data-speed="1.25" aria-hidden="true">
+          <div className="lp-float-in" data-depth="1.2">
+            <div className="lp-float-card"><span className="lp-live" /><div><strong>New order</strong><small>₹899 · Cash on delivery</small></div></div>
+          </div>
+        </div>
+        <div className="lp-float lp-float-2" data-speed="0.85" aria-hidden="true">
+          <div className="lp-float-in" data-depth="0.7">
+            <div className="lp-float-card"><span className="lp-tick">✓</span><div><strong>Payment received</strong><small>Cotton Shirt · M</small></div></div>
+          </div>
+        </div>
+        <div className="lp-float lp-float-3" data-speed="1.1" aria-hidden="true">
+          <div className="lp-float-in" data-depth="1.6">
+            <div className="lp-float-card"><span className="lp-truck">➜</span><div><strong>Shipped</strong><small>Tracking link sent</small></div></div>
+          </div>
+        </div>
+        <div className="lp-scroll" aria-hidden="true"><span>Scroll</span><i /></div>
+      </section>
+
+      <div className="lp-marquee" aria-hidden="true">
+        <div className="lp-marquee-track">
+          {[0, 1].map((k) => (
+            <div className="lp-marquee-row" key={k}>
+              {MARQUEE.map((w) => (
+                <span key={w + k}>{w}<em>✦</em></span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <section className="lp-statement">
+        <small>Expressfly</small>
+        <p className="lp-statement-text">Every seller gets a store website, payments, shipping and support in one place, so you can spend your time on what you sell.</p>
       </section>
 
       <section id="features" className="lp-wrap">
@@ -55,7 +139,7 @@ export default function Landing() {
         <div className="lp-big">
           <div className="lp-editor">
             <span className="lp-draft">Draft</span>
-            <div className="lp-panel">
+            <div className="lp-panel" data-speed="0.9">
               <b>Home page</b>
               <div className="lp-row">Header</div>
               <div className="lp-add">＋ Add section</div>
@@ -65,7 +149,7 @@ export default function Landing() {
               <div className="lp-row sub">Buttons</div>
               <div className="lp-add">＋ Add block</div>
             </div>
-            <div className="lp-shop">
+            <div className="lp-shop" data-speed="1.06">
               <div className="lp-shop-bar"><span>New arrivals</span><span>Best sellers</span><span>Offers</span><span className="lp-cart">🛒</span></div>
               <div className="lp-shop-hero"><strong>Your Store</strong><small>Slide title and subtitle go here</small><span>Shop the collection</span></div>
             </div>
@@ -134,11 +218,14 @@ export default function Landing() {
 
       <section id="how" className="lp-wrap">
         <Title a="Your store in 4 easy steps." b="No coding, no designer." />
+        <div className="lp-h-viewport">
         <div className="lp-4">
           {STEPS.map(([t, d], i) => (
             <div className="lp-step" key={t}><span>{i + 1}</span><h3>{t}</h3><p>{d}</p></div>
           ))}
         </div>
+        </div>
+        <div className="lp-h-progress" aria-hidden="true"><i /></div>
       </section>
 
       <section className="lp-wrap">
@@ -166,7 +253,12 @@ export default function Landing() {
 
       <footer className="lp-foot">
         <div className="lp-foot-cols">
-          <span className="lp-logo big">E</span>
+          {/* <span className="lp-logo big">E</span> */}
+          <img
+  className="lp-logo big"
+  src="/logo-Expressfly.png"
+  alt="ExpressFly Logistics"
+/>
           <div><h4>Expressfly</h4><a href="#about">Who we are</a><a href="#features">What we provide</a><a href="#how">How it works</a></div>
           <div><h4>Sellers</h4><Link to="/seller/register">Create a store</Link><Link to="/seller/login">Seller log in</Link><Link to="/seller/forgot-password">Forgot password</Link></div>
           <div><h4>Shoppers</h4><Link to={STORE}>Demo store</Link><Link to={`${STORE}/track`}>Track an order</Link><Link to={`${STORE}/faqs`}>FAQs</Link></div>
@@ -174,6 +266,8 @@ export default function Landing() {
         </div>
         <div className="lp-foot-bar"><span>© {new Date().getFullYear()} Expressfly. All rights reserved.</span><Link to="/admin/login">Admin</Link></div>
       </footer>
+      </div>
+      </div>
     </div>
   );
 }

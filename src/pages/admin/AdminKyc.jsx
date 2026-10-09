@@ -4,6 +4,7 @@ import { useAdminAuth } from "../../context/AdminAuthContext";
 import AdminLayout from "./AdminLayout";
 import Pagination from "../../components/Pagination";
 import usePagination from "../../hooks/usePagination";
+import { AdminLoading } from "../../components/AdminUi";
 
 export default function AdminKyc() {
   const { authHeader } = useAdminAuth();
@@ -90,7 +91,7 @@ export default function AdminKyc() {
         {error && <div className="adm-error adm-error-banner">{error}</div>}
 
         {loading ? (
-          <div className="adm-empty">Loading submissions…</div>
+          <AdminLoading label="Loading submissions…" />
         ) : sellers.length === 0 ? (
           <div className="adm-empty">
             <div className="adm-empty-mark">✓</div>

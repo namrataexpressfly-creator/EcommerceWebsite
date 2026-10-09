@@ -41,7 +41,8 @@
       "sales": "विक्री",
       "marketing": "मार्केटिंग",
       "support": "सहाय्य",
-      "account": "खाते"
+      "account": "खाते",
+      "developer": "डेव्हलपर"
     },
     "nav": {
       "overview": "आढावा",
@@ -59,7 +60,8 @@
       "supportTickets": "सहाय्य तिकिटे",
       "kyc": "केवायसी",
       "paymentMethods": "पेमेंट पद्धती",
-      "storeSettings": "स्टोअर सेटिंग्ज"
+      "storeSettings": "स्टोअर सेटिंग्ज",
+      "apiReference": "API संदर्भ"
     },
     "viewStorefront": "स्टोअरफ्रंट पहा ↗",
     "viewStorefrontLocked": "स्टोअरफ्रंट पहा (लॉक)",

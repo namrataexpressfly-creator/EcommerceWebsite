@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import client, { getBestSellers, getAllStoreReviews, getStoreFilters, resolveMediaUrl } from "../../api/client";
 import { formatMoney } from "../../utils/format";
 import { FREE_SHIPPING_THRESHOLD } from "../../utils/shop";
@@ -57,6 +57,151 @@ const FEATURES = [
   },
 ];
 
+const STEPS = [
+  { title: "Choose what you like", text: "Browse the categories or search the shop, then add your picks to the cart." },
+  { title: "Check out in one page", text: "Add your address, pick a payment method and place the order. No long forms." },
+  { title: "Track it to your door", text: "Follow your order at any time from the Track order page." },
+];
+
+function CategoryStrip({ categories, basePath }) {
+  if (!categories.length) return null;
+  return (
+    <div className="sf-promo-row">
+      {categories.slice(0, 4).map((c) => (
+        <Link key={c._id} to={`${basePath}/category/${encodeURIComponent(c.slug)}`} className="sf-promo">
+          {c.image ? <img src={resolveMediaUrl(c.image)} alt="" /> : <span className="sf-promo-initial">{c.name?.[0] || "?"}</span>}
+          <span className="sf-promo-text">
+            <strong>{c.name}</strong>
+            <small>Shop the collection</small>
+          </span>
+          <span className="sf-promo-arrow" aria-hidden="true">›</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function HeroSearch({ categories, basePath, onSearch }) {
+  const [text, setText] = useState("");
+  const [hint, setHint] = useState("");
+  const listRef = useRef(null);
+  const [edge, setEdge] = useState({ overflow: false, start: true, end: false });
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return undefined;
+    const update = () =>
+      setEdge({
+        overflow: el.scrollWidth > el.clientWidth + 2,
+        start: el.scrollLeft <= 2,
+        end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2,
+      });
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [categories]);
+
+  const scrollChips = (dir) => {
+    const el = listRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.7, behavior: "smooth" });
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    const value = text.trim();
+    if (value.length < 3) {
+      setHint("Type at least 3 letters to search.");
+      return;
+    }
+    setHint("");
+    onSearch(value);
+  };
+  return (
+    <div className="hero-overlay">
+      <form className="hero-search" onSubmit={submit} role="search">
+        <input
+          type="search"
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            if (hint) setHint("");
+          }}
+          placeholder="Search products in this store"
+          aria-label="Search products"
+        />
+        <button type="submit" className="hero-search-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4.5 4.5" />
+          </svg>
+        </button>
+      </form>
+      {hint && <div className="hero-search-hint" role="alert">{hint}</div>}
+      {categories.length > 0 && (
+        <div className="hero-chips">
+          <span className="hero-chips-label">Shop by category</span>
+          {edge.overflow && (
+            <button type="button" className="hero-chips-arrow" aria-label="Scroll categories left" disabled={edge.start} onClick={() => scrollChips(-1)}>‹</button>
+          )}
+          <div className="hero-chips-list" ref={listRef}>
+            {categories.map((c) => (
+              <Link key={c._id} to={`${basePath}/category/${encodeURIComponent(c.slug)}`} className="hero-chip">
+                {c.image ? <img src={resolveMediaUrl(c.image)} alt="" /> : <span className="hero-chip-initial">{c.name?.[0] || "?"}</span>}
+                {c.name}
+              </Link>
+            ))}
+          </div>
+          {edge.overflow && (
+            <button type="button" className="hero-chips-arrow" aria-label="Scroll categories right" disabled={edge.end} onClick={() => scrollChips(1)}>›</button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HowItWorks() {
+  return (
+    <div className="sf-section">
+      <div className="sf-head">
+        <div>
+          <h2 className="sf-title">Ordering in three simple steps</h2>
+          <p className="sf-sub">From first click to your doorstep, kept as short as we can make it.</p>
+        </div>
+      </div>
+      <div className="sf-steps">
+        {STEPS.map((st, i) => (
+          <div className="sf-step" key={st.title}>
+            <div className="sf-step-num">{String(i + 1).padStart(2, "0")}</div>
+            <h3>{st.title}</h3>
+            <p>{st.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TrustMarquee() {
+  const items = FEATURES.map((f) => (
+    <div className="sf-marquee-item" key={f.title}>
+      {f.icon}
+      {f.title}
+      <span>{f.text}</span>
+    </div>
+  ));
+  return (
+    <div className="sf-marquee" role="presentation">
+      <div className="sf-marquee-track">{items}</div>
+      <div className="sf-marquee-track" aria-hidden="true">{items}</div>
+    </div>
+  );
+}
+
 export default function StoreHome() {
   const { slug, basePath } = useStoreSlug();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,7 +213,7 @@ export default function StoreHome() {
   const minPrice = searchParams.get("min_price") || "";
   const maxPrice = searchParams.get("max_price") || "";
   const availabilityParam = searchParams.get("availability") || "";
-  const variantsParam = searchParams.get("variants") || ""; 
+  const variantsParam = searchParams.get("variants") || "";
   const page = Number(searchParams.get("page") || 1);
   const limit = 12;
 
@@ -89,6 +234,7 @@ export default function StoreHome() {
   const [availabilityStats, setAvailabilityStats] = useState(null);
   const [variantDefs, setVariantDefs] = useState([]);
   const productsRef = useRef(null);
+  const reviewsRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -212,7 +358,7 @@ export default function StoreHome() {
     }, 500);
 
     return () => clearTimeout(timer);
-  
+
   }, [slug, q, category, minPrice, maxPrice, sort, page, availabilityParam, variantsParam]);
 
 
@@ -281,9 +427,23 @@ export default function StoreHome() {
 
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
+  const runSearch = (value) => {
+    updateParam("q", value);
+    setTimeout(() => document.getElementById("all-products")?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+  };
+
+  const scrollReviews = (dir) => {
+    const el = reviewsRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 420), behavior: "smooth" });
+  };
+
   return (
     <div>
+      <CategoryStrip categories={categories} basePath={basePath} />
+
       <HeroSlider
+        overlay={<HeroSearch categories={categories} basePath={basePath} onSearch={runSearch} />}
         slug={slug}
         basePath={basePath}
         storeName={storeConfig?.store_name}
@@ -291,20 +451,27 @@ export default function StoreHome() {
         products={products}
       />
 
+      <TrustMarquee />
+
       {categories.length > 0 && (
-        <div className="store-section category-shop-section">
-          <div className="category-shop-header">
-            <h2 className="store-section-title">Shop by Category</h2>
-            <button type="button" className="category-view-all" onClick={() => navigate(`${basePath}/categories`)}>
-              View all →
-            </button>
+        <div className="category-shop-section">
+          <div className="sf-head">
+            <div>
+              <h2 className="sf-title">Shop by category</h2>
+              <p className="sf-sub">Find what you need faster. Start with a collection and go from there.</p>
+            </div>
+            <div className="sf-head-actions">
+              <button type="button" className="btn btn-ghost" onClick={() => navigate(`${basePath}/categories`)}>
+                View all categories
+              </button>
+            </div>
           </div>
           <div className="category-tile-grid">
             {categories.slice(0, 4).map((c) => (
               <button type="button" className="category-tile" key={c._id} onClick={() => goToCategory(c.slug)}>
                 <div className="category-tile-thumb">
                   {c.image ? (
-                    <img src={resolveMediaUrl(c.image)} alt={c.name} />
+                    <img src={resolveMediaUrl(c.image)} alt="" />
                   ) : (
                     <div className="category-tile-placeholder">{c.name?.[0] || "?"}</div>
                   )}
@@ -312,30 +479,24 @@ export default function StoreHome() {
                 <div className="category-tile-name">{c.name}</div>
               </button>
             ))}
-            <button type="button" className="category-tile category-tile-discover" onClick={() => navigate(`${basePath}/categories`)}>
-              Discover all
-              <br />
-              categories →
+            <button type="button" className="category-tile category-tile-all" onClick={() => navigate(`${basePath}/categories`)}>
+              <div className="category-tile-thumb category-tile-all-thumb">
+                <span className="category-tile-all-arrow" aria-hidden="true">→</span>
+              </div>
+              <div className="category-tile-name">View all categories</div>
             </button>
           </div>
         </div>
       )}
 
-      <div className="feature-cards-row">
-        {FEATURES.map((f) => (
-          <div className="feature-card" key={f.title}>
-            <div className="feature-card-icon">{f.icon}</div>
+      {bestSellers.length > 0 && (
+        <div className="sf-section">
+          <div className="sf-head">
             <div>
-              <div className="feature-card-title">{f.title}</div>
-              <div className="feature-card-text">{f.text}</div>
+              <h2 className="sf-title">Best sellers</h2>
+              <p className="sf-sub">The products our customers keep coming back for.</p>
             </div>
           </div>
-        ))}
-      </div>
-
-      {bestSellers.length > 0 && (
-        <div className="store-section">
-          <h2 className="store-section-title">Best Sellers</h2>
           <div className="product-grid">
             {bestSellers.map((p) => (
               <ProductCard
@@ -351,7 +512,9 @@ export default function StoreHome() {
         </div>
       )}
 
-      <div className="products-head" ref={productsRef}>
+      <HowItWorks />
+
+      <div className="products-head" id="all-products" ref={productsRef}>
         <h2 className="store-section-title">{categories.find((c) => c.slug === category)?.name || "All products"}</h2>
         {!loading && (
           <span className="products-count">
@@ -460,9 +623,18 @@ export default function StoreHome() {
       )}
 
       {allReviews.length > 0 && (
-        <div className="store-section">
-          <h2 className="store-section-title">What customers are saying</h2>
-          <div className="review-card-grid">
+        <div className="sf-section">
+          <div className="sf-head">
+            <div>
+              <h2 className="sf-title">What customers are saying</h2>
+              <p className="sf-sub">Honest reviews from people who have ordered.</p>
+            </div>
+            <div className="sf-carousel-nav">
+              <button type="button" className="sf-carousel-btn" aria-label="Previous reviews" onClick={() => scrollReviews(-1)}>←</button>
+              <button type="button" className="sf-carousel-btn" aria-label="Next reviews" onClick={() => scrollReviews(1)}>→</button>
+            </div>
+          </div>
+          <div className="review-card-grid" ref={reviewsRef}>
             {allReviews.map((r) => (
               <div className="review-card" key={r._id}>
                 <StarRating value={r.rating} />
@@ -478,12 +650,8 @@ export default function StoreHome() {
             ))}
           </div>
           {allReviews.length < allReviewsTotal && (
-            <div className="form-row" style={{ justifyContent: "center", marginTop: 12 }}>
-              <button
-                className="btn btn-ghost"
-                disabled={allReviewsLoading}
-                onClick={loadMoreReviews}
-              >
+            <div className="form-row" style={{ justifyContent: "center", marginTop: 24 }}>
+              <button className="btn btn-ghost" disabled={allReviewsLoading} onClick={loadMoreReviews}>
                 {allReviewsLoading ? "Loading…" : "Load more reviews"}
               </button>
             </div>

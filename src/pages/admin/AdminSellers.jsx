@@ -4,6 +4,7 @@ import { useAdminAuth } from "../../context/AdminAuthContext";
 import AdminLayout from "./AdminLayout";
 import Pagination from "../../components/Pagination";
 import usePagination from "../../hooks/usePagination";
+import { AdminLoading } from "../../components/AdminUi";
 
 const KYC_LABEL = {
   not_submitted: "Not submitted",
@@ -86,7 +87,7 @@ export default function AdminSellers() {
         {error && <div className="adm-error adm-error-banner">{error}</div>}
 
         {loading ? (
-          <div className="adm-empty">Loading sellers…</div>
+          <AdminLoading label="Loading sellers…" />
         ) : sellers.length === 0 ? (
           <div className="adm-empty">
             <p>No sellers yet.</p>

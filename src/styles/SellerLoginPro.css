@@ -1,0 +1,532 @@
+/* Seller login (GSAP-animated split layout). Used only by pages/seller/Login.jsx
+   Palette: light lavender/sky/blush panel with indigo accents. To try another look, replace the
+   variables just below (g1 = darkest, g2 = main button/focus colour, g3 = lightest gradient end, gold = accent).
+     Ocean blue : g1 #0b3a6e  g2 #1d6fd6  g3 #2fa0e8  gold #ffb86b
+     Sunset rose: g1 #7a1f4a  g2 #d6336c  g3 #f06a4f  gold #ffd166
+     Teal       : g1 #0b4f5c  g2 #0f8b99  g3 #35b6a8  gold #f4b860 */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap");
+
+.slp-page {
+  --g1: #2b2a7a;
+  --g2: #4f46e5;
+  --g3: #7c5cf0;
+  --gold: #f59e7a;
+  --ink: #1b1b3a;
+  --soft: #6a6b85;
+  --line: #e4e3f3;
+  --danger: #b3402f;
+
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: #f7f7fc;
+}
+.slp-page, .slp-page *, .slp-page *::before, .slp-page *::after { box-sizing: border-box; }
+
+/* ---------- Brand panel ---------- */
+.slp-brand {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--ink);
+  background: linear-gradient(150deg, #eef1ff 0%, #e4ebff 42%, #f3e9ff 75%, #ffeef3 100%);
+  border-right: 1px solid var(--line);
+}
+.slp-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.slp-blob-a { width: 380px; height: 380px; background: #c7d2fe; top: -120px; right: -100px; }
+.slp-blob-b { width: 320px; height: 320px; background: #fbcfe8; bottom: -140px; left: -80px; opacity: 0.75; }
+.slp-grid {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.1;
+  background-image: linear-gradient(var(--g2) 1px, transparent 1px), linear-gradient(90deg, var(--g2) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 30% 40%, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 30% 40%, #000 0%, transparent 70%);
+}
+/* .slp-logo { position: relative; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; } */
+.slp-logo-mark {
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--g2), var(--g3)); color: #fff; box-shadow: 0 10px 22px -10px rgba(79,70,229,0.6);
+  font-family: "Fraunces", Georgia, serif; font-size: 1.3rem;
+}
+.slp-hero { position: relative; max-width: 520px; }
+.slp-eyebrow { display: inline-block; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--g2); margin-bottom: 18px; }
+.slp-headline {
+  font-family: "Fraunces", Georgia, serif; font-weight: 500;
+  font-size: clamp(2.2rem, 3.6vw, 3.3rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 20px;
+}
+.slp-word { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; }
+.slp-word > span { display: inline-block; will-change: transform; }
+.slp-lead { color: var(--soft); font-size: 1rem; line-height: 1.65; margin: 0 0 30px; max-width: 440px; }
+.slp-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.slp-points li { display: flex; align-items: center; gap: 12px; font-size: 0.94rem; color: var(--ink); }
+.slp-tick { width: 24px; height: 24px; border-radius: 50%; background: var(--g2); display: grid; place-items: center; flex: none; }
+.slp-tick svg { width: 13px; height: 13px; }
+
+.slp-chip {
+  position: absolute; display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 14px; font-size: 0.8rem; font-weight: 600; color: var(--ink);
+  background: #fff; border: 1px solid var(--line); box-shadow: 0 14px 30px -14px rgba(79, 70, 229, 0.35);
+  backdrop-filter: blur(8px); will-change: transform;
+}
+.slp-chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--g3); box-shadow: 0 0 0 4px rgba(124,92,240,0.18); }
+.slp-chip-1 { top: 17%; right: 9%; }
+.slp-chip-2 { bottom: 24%; right: 15%; }
+.slp-chip-3 { bottom: 9%; right: 6%; }
+.slp-chip-2 i { background: var(--gold); box-shadow: 0 0 0 4px rgba(245,158,122,0.22); }
+.slp-foot { position: relative; font-size: 0.8rem; color: var(--soft); }
+
+/* ---------- Form side ---------- */
+.slp-side { display: flex; align-items: center; justify-content: center; padding: 40px 28px; }
+.slp-card {
+  width: 100%; max-width: 420px; background: #fff; border: 1px solid var(--line); border-radius: 22px;
+  padding: 40px 36px 32px; box-shadow: 0 30px 60px -34px rgba(79, 70, 229, 0.25);
+}
+.slp-card h1 { font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: 1.9rem; letter-spacing: -0.02em; margin: 0 0 6px; }
+.slp-sub { margin: 0 0 28px; color: var(--soft); font-size: 0.93rem; }
+
+.slp-field { position: relative; margin-bottom: 16px; }
+.slp-field input {
+  width: 100%; height: 56px; padding: 22px 46px 8px 16px; font: inherit; font-size: 0.97rem; color: var(--ink);
+  background: #fbfbff; border: 1.5px solid var(--line); border-radius: 14px; outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.slp-field input:hover { border-color: #cfcde8; }
+.slp-field input:focus { border-color: var(--g2); background: #fff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12); }
+.slp-field label {
+  position: absolute; left: 16px; top: 18px; font-size: 0.95rem; color: var(--soft); pointer-events: none;
+  transform-origin: left top; transition: transform 0.2s ease, color 0.2s ease;
+}
+.slp-field input:focus + label,
+.slp-field input:not(:placeholder-shown) + label { transform: translateY(-11px) scale(0.78); color: var(--g2); font-weight: 600; }
+.slp-eye {
+  position: absolute; right: 8px; top: 8px; width: 40px; height: 40px; border: 0; background: transparent;
+  border-radius: 10px; color: var(--soft); cursor: pointer; display: grid; place-items: center;
+}
+.slp-eye:hover { background: #efeefb; color: var(--g2); }
+.slp-eye svg { width: 20px; height: 20px; }
+
+.slp-row { display: flex; align-items: center; justify-content: space-between; margin: 4px 0 22px; font-size: 0.88rem; }
+.slp-remember { display: flex; align-items: center; gap: 9px; cursor: pointer; color: var(--soft); user-select: none; }
+.slp-remember input { position: absolute; opacity: 0; pointer-events: none; }
+.slp-box {
+  width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid #bcbbd8; background: #fff;
+  display: grid; place-items: center; transition: background 0.15s ease, border-color 0.15s ease;
+}
+.slp-box svg { width: 11px; height: 11px; opacity: 0; transition: opacity 0.15s ease; }
+.slp-remember input:checked + .slp-box { background: var(--g2); border-color: var(--g2); }
+.slp-remember input:checked + .slp-box svg { opacity: 1; }
+.slp-remember input:focus-visible + .slp-box { box-shadow: 0 0 0 4px rgba(79,70,229,0.18); }
+.slp-row a, .slp-reg a { color: var(--g2); font-weight: 600; text-decoration: none; }
+.slp-row a:hover, .slp-reg a:hover { text-decoration: underline; }
+
+.slp-error {
+  background: #fbeae7; color: var(--danger); border: 1px solid #f0cdc7; border-radius: 12px;
+  padding: 11px 14px; font-size: 0.87rem; margin-bottom: 16px;
+}
+.slp-submit {
+  position: relative; overflow: hidden; width: 100%; height: 54px; border: 0; border-radius: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font: inherit; font-weight: 600; font-size: 0.98rem; letter-spacing: 0.01em; color: #fff;
+  background: linear-gradient(135deg, var(--g2), var(--g3)); box-shadow: 0 14px 26px -12px rgba(79, 70, 229, 0.7);
+  will-change: transform;
+}
+.slp-submit:disabled { opacity: 0.75; cursor: default; }
+.slp-submit svg { width: 18px; height: 18px; transition: transform 0.2s ease; }
+.slp-submit:hover:not(:disabled) svg { transform: translateX(4px); }
+.slp-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.4); border-top-color: #fff; animation: slp-rot 0.7s linear infinite; }
+@keyframes slp-rot { to { transform: rotate(360deg); } }
+.slp-reg { text-align: center; margin: 22px 0 0; font-size: 0.9rem; color: var(--soft); }
+
+@media (max-width: 920px) {
+  .slp-page { grid-template-columns: 1fr; }
+  .slp-brand { padding: 28px 24px 30px; }
+  .slp-hero { margin-top: 28px; }
+  .slp-lead, .slp-points, .slp-chip, .slp-foot { display: none; }
+  .slp-headline { font-size: 1.9rem; margin: 0; }
+  .slp-eyebrow { margin-bottom: 10px; }
+  .slp-side { padding: 28px 16px 40px; margin-top: -8px; }
+  .slp-card { padding: 30px 22px 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .slp-spin { animation-duration: 1.6s; } }
+
+/* ---------- Forgot / reset password additions ---------- */
+.slp-badge {
+  width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; margin-bottom: 18px;
+  color: var(--g2); background: #efeefd; border: 1px solid var(--line);
+}
+.slp-badge svg { width: 26px; height: 26px; }
+.slp-center { text-align: center; }
+.slp-center .slp-sub { margin-bottom: 24px; line-height: 1.6; }
+.slp-center .slp-sub strong { color: var(--ink); word-break: break-all; }
+.slp-success-icon {
+  width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 20px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--g2), var(--g3)); box-shadow: 0 16px 30px -12px rgba(79, 70, 229, 0.6), 0 0 0 8px rgba(79, 70, 229, 0.1);
+}
+.slp-success-icon svg { width: 30px; height: 30px; }
+.slp-icon-warn { background: linear-gradient(135deg, #e8745a, var(--gold)); box-shadow: 0 16px 30px -12px rgba(232, 116, 90, 0.6), 0 0 0 8px rgba(245, 158, 122, 0.18); }
+.slp-ghost {
+  width: 100%; height: 50px; border-radius: 14px; cursor: pointer; font: inherit; font-weight: 600; font-size: 0.95rem;
+  color: var(--g2); background: #fff; border: 1.5px solid var(--line); transition: border-color 0.2s ease, background 0.2s ease;
+}
+.slp-ghost:hover { border-color: var(--g2); background: #f6f5ff; }
+.slp-linkbtn { text-decoration: none; color: #fff; }
+.slp-meter { display: flex; align-items: center; gap: 12px; margin: -4px 0 16px; }
+.slp-meter-bars { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.slp-meter-bars span { height: 5px; border-radius: 999px; background: #e7e6f4; transition: background 0.25s ease; }
+.slp-meter-bars span.on.lvl-1 { background: #e0614c; }
+.slp-meter-bars span.on.lvl-2 { background: #f2a33a; }
+.slp-meter-bars span.on.lvl-3 { background: #6fb86f; }
+.slp-meter-bars span.on.lvl-4 { background: #2f9e5e; }
+.slp-meter-text { font-size: 0.78rem; font-weight: 600; color: var(--soft); min-width: 60px; text-align: right; }
+
+/* ---------- Seller registration ---------- */
+.slp-card-wide { max-width: 560px; padding: 36px 40px 30px; }
+.slp-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+.slp-stepper { display: flex; align-items: center; margin-bottom: 26px; }
+.slp-step-dot { display: flex; align-items: center; gap: 10px; }
+.slp-step-dot span {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 0.82rem; font-weight: 700;
+  color: var(--soft); background: #f0effa; border: 1.5px solid var(--line); transition: all 0.3s ease;
+}
+.slp-step-dot em { font-style: normal; font-size: 0.84rem; font-weight: 600; color: var(--soft); transition: color 0.3s ease; }
+.slp-step-dot.active span { color: #fff; background: linear-gradient(135deg, var(--g2), var(--g3)); border-color: transparent; box-shadow: 0 8px 16px -8px rgba(79, 70, 229, 0.7); }
+.slp-step-dot.active em { color: var(--ink); }
+.slp-step-line { flex: 1; height: 2px; margin: 0 14px; border-radius: 2px; background: var(--line); position: relative; overflow: hidden; }
+.slp-step-line::after { content: ""; position: absolute; inset: 0; background: var(--g2); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+.slp-step-line.filled::after { transform: scaleX(1); }
+/* .slp-prefixed input { padding-left: var(--pfx, 56px); }
+.slp-prefixed label { left: var(--pfx, 56px); }
+.slp-pfx { position: absolute; left: 16px; bottom: 11px; font-size: 0.95rem; color: var(--soft); pointer-events: none; z-index: 1; } */
+
+/* ---------- Prefixed inputs ---------- */
+
+.slp-prefixed {
+  position: relative;
+}
+
+/* +91 / /store/ */
+.slp-pfx {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+
+  font-size: 0.95rem;
+  color: var(--soft);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Phone */
+.slp-prefixed input {
+  padding-left: 56px !important;
+}
+
+/* Store slug has a longer prefix */
+.slp-prefixed.slug-field input {
+  padding-left: 76px !important;
+}
+
+/* Normal label position */
+.slp-prefixed label {
+  left: 56px;
+}
+
+/* Store slug label position */
+.slp-prefixed.slug-field label {
+  left: 76px;
+}
+
+/* Floating label */
+.slp-prefixed input:focus + label,
+.slp-prefixed input:not(:placeholder-shown) + label {
+  transform: translateY(-11px) scale(0.78);
+}
+
+/* Keep phone label aligned */
+.slp-prefixed:not(.slug-field) input:focus + label,
+.slp-prefixed:not(.slug-field) input:not(:placeholder-shown) + label {
+  left: 56px;
+}
+
+/* Keep slug label aligned */
+.slp-prefixed.slug-field input:focus + label,
+.slp-prefixed.slug-field input:not(:placeholder-shown) + label {
+  left: 76px;
+}
+.slp-urlbox {
+  display: flex; flex-direction: column; gap: 2px; margin: -4px 0 18px; padding: 10px 14px; border-radius: 12px;
+  background: #f5f4ff; border: 1px dashed #cfcdf2; font-size: 0.8rem; color: var(--soft);
+}
+.slp-urlbox strong { color: var(--g2); font-weight: 600; word-break: break-all; }
+.slp-label { display: block; font-size: 0.84rem; font-weight: 600; margin-bottom: 8px; }
+.slp-label em { font-style: normal; font-weight: 400; color: var(--soft); }
+.slp-upload { margin-bottom: 20px; }
+.slp-upload-drop {
+  width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 20px 14px; cursor: pointer;
+  font: inherit; color: var(--soft); background: #fbfbff; border: 1.5px dashed #cfcde8; border-radius: 14px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.slp-upload-drop:hover { border-color: var(--g2); background: #f6f5ff; }
+.slp-upload-drop svg { width: 26px; height: 26px; color: var(--g2); }
+.slp-upload-drop span { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+.slp-upload-drop small { font-size: 0.76rem; }
+.slp-upload:has(img) { display: flex; align-items: center; gap: 14px; padding: 12px; border: 1.5px solid var(--line); border-radius: 14px; background: #fbfbff; }
+.slp-upload img { width: 56px; height: 56px; border-radius: 12px; object-fit: cover; border: 1px solid var(--line); background: #fff; }
+.slp-upload-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.slp-upload-text strong { font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slp-upload-text button { align-self: flex-start; background: none; border: 0; padding: 0; font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--danger); cursor: pointer; }
+.slp-actions { display: flex; gap: 12px; }
+.slp-actions .slp-submit { flex: 1; }
+.slp-back { width: auto; flex: 0 0 auto; padding: 0 22px; height: 54px; }
+@media (max-width: 920px) {
+  .slp-card-wide { padding: 28px 22px 24px; }
+}
+@media (max-width: 520px) {
+  .slp-grid2 { grid-template-columns: 1fr; }
+  .slp-step-dot em { display: none; }
+}
+
+
+.slp-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.slp-logo img {
+  width: 180px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+
+/* ==========================================================================
+   Modern pastel LOGIN design  (pages/seller/Login.jsx)
+   Uses its own "slx-" prefix, so it can never clash with the slp- styles above that the
+   Forgot password / Reset password / Register pages rely on.
+   ========================================================================== */
+/* Seller login: soft pastel split layout. Scoped to .slx-page (does not affect other auth pages). */
+.slx-page {
+  --ink: #14213d;
+  --mut: #615c80;
+  --acc: #4f6bf6;
+  --acc2: #7c5cfa;
+  --line: #e9e4f6;
+  --err: #b4443a;
+  min-height: 100vh;
+  background: #fcfbff;
+  color: var(--ink);
+  font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
+}
+.slx-page * { box-sizing: border-box; }
+
+.slx-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  min-height: 100vh;
+  padding: 16px;
+  gap: 16px;
+}
+
+/* ---------------- Left: pastel story panel ---------------- */
+.slx-visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  background:
+    radial-gradient(60% 55% at 85% 8%, rgba(196, 181, 253, 0.75), transparent 62%),
+    radial-gradient(50% 55% at 5% 95%, rgba(253, 205, 180, 0.7), transparent 66%),
+    radial-gradient(45% 45% at 60% 100%, rgba(167, 243, 208, 0.5), transparent 70%),
+    linear-gradient(135deg, #eeeaff 0%, #fde7f0 60%, #fff0e7 100%);
+}
+.slx-orb { position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none; will-change: transform; }
+.slx-orb-a { width: 340px; height: 340px; right: -80px; top: -70px; background: rgba(196, 181, 253, 0.65); }
+.slx-orb-b { width: 300px; height: 300px; left: -70px; bottom: 80px; background: rgba(253, 186, 206, 0.55); }
+.slx-orb-c { width: 220px; height: 220px; left: 38%; bottom: -60px; background: rgba(167, 243, 208, 0.55); }
+
+.slx-visual-in {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  min-height: calc(100vh - 32px);
+  padding: 44px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.slx-brand { display: inline-flex; align-items: center; gap: 12px; font-size: 1.3rem; font-weight: 600; letter-spacing: -0.04em; }
+.slx-logo {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--acc), var(--acc2));
+  color: #fff; font-weight: 700; font-size: 1.05rem;
+  box-shadow: 0 8px 20px rgba(79, 107, 246, 0.3);
+}
+
+.slx-story { max-width: 520px; margin: 36px 0; }
+.slx-eyebrow {
+  display: inline-block; padding: 6px 14px; border-radius: 99px;
+  background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.9);
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut);
+}
+.slx-headline {
+  margin: 20px 0 16px;
+  font-size: clamp(2.4rem, 4.4vw, 4rem);
+  line-height: 1.04; letter-spacing: -0.05em; font-weight: 600;
+}
+.slx-sub { margin: 0; font-size: 1.08rem; line-height: 1.6; color: var(--mut); max-width: 440px; }
+.slx-chips { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.slx-chip {
+  padding: 8px 16px; border-radius: 99px; font-size: 0.86rem; font-weight: 500;
+  background: rgba(255, 255, 255, 0.72); border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 18px rgba(120, 100, 200, 0.08);
+}
+
+.slx-floats { position: relative; height: 210px; }
+.slx-float { position: absolute; }
+.slx-float-1 { left: 0; top: 6px; }
+.slx-float-2 { left: 31%; top: 80px; }
+.slx-float-3 { left: 62%; top: 14px; }
+.slx-float-card {
+  display: flex; align-items: center; gap: 12px; white-space: nowrap;
+  padding: 12px 18px 12px 12px; border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 18px 44px rgba(120, 100, 200, 0.16);
+}
+.slx-float-card strong { display: block; font-size: 0.92rem; font-weight: 600; }
+.slx-float-card small { color: var(--mut); font-size: 0.78rem; }
+.slx-ic { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; color: #fff; font-weight: 700; flex: none; }
+.slx-ic-a { background: linear-gradient(135deg, var(--acc), var(--acc2)); position: relative; }
+.slx-ic-a::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #fff; animation: slx-ping 1.6s ease-out infinite; }
+.slx-ic-b { background: #3fb68b; }
+.slx-ic-c { background: #8b7cf6; }
+@keyframes slx-ping { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); } 100% { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0); } }
+
+/* ---------------- Right: form ---------------- */
+.slx-panel { display: flex; flex-direction: column; padding: 22px clamp(20px, 5vw, 64px) 40px; }
+.slx-top { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+.slx-brand-mobile { display: none; }
+.slx-back {
+  display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+  padding: 8px 14px 8px 10px; border-radius: 99px; border: 1px solid var(--line);
+  font-size: 0.86rem; font-weight: 500; color: var(--mut); text-decoration: none; background: #fff;
+  transition: color 0.2s, border-color 0.2s, transform 0.25s, box-shadow 0.25s;
+}
+.slx-back svg { width: 16px; height: 16px; transition: transform 0.25s; }
+.slx-back:hover { color: var(--acc); border-color: #cdd5ff; box-shadow: 0 6px 16px rgba(79, 107, 246, 0.12); }
+.slx-back:hover svg { transform: translateX(-3px); }
+
+.slx-form { width: 100%; max-width: 430px; margin: auto; padding: 36px 0 12px; }
+.slx-title { margin: 0 0 10px; font-size: clamp(1.9rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.045em; font-weight: 600; font-family: inherit; text-transform: none; }
+.slx-lead { margin: 0 0 30px; color: var(--mut); font-size: 1rem; line-height: 1.55; }
+
+/* Floating-label fields */
+.slx-field { position: relative; margin-bottom: 16px; }
+.slx-field input {
+  width: 100%; height: 60px; padding: 24px 50px 8px 50px;
+  border: 1.5px solid var(--line); border-radius: 16px; background: #fff;
+  font: inherit; font-size: 1rem; color: var(--ink); outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+.slx-field input:hover { border-color: #d6d0ee; }
+.slx-field input:focus { border-color: var(--acc); box-shadow: 0 0 0 4px rgba(79, 107, 246, 0.12); }
+.slx-field label {
+  position: absolute; left: 50px; top: 19px; font-size: 1rem; color: #8b87a8; pointer-events: none;
+  transform-origin: 0 0; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.25s;
+}
+.slx-field input:focus + label,
+.slx-field input:not(:placeholder-shown) + label { transform: translateY(-11px) scale(0.76); color: var(--acc); }
+.slx-ico { position: absolute; left: 17px; top: 19px; width: 22px; height: 22px; color: #a39fc0; pointer-events: none; transition: color 0.25s; }
+.slx-field input:focus ~ .slx-ico { color: var(--acc); }
+.slx-bar {
+  position: absolute; left: 18px; right: 18px; bottom: 0; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--acc), var(--acc2)); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.slx-field input:focus ~ .slx-bar { transform: scaleX(1); }
+.slx-eye {
+  position: absolute; right: 10px; top: 10px; width: 40px; height: 40px; border: 0; border-radius: 12px;
+  background: transparent; color: #8b87a8; cursor: pointer; display: grid; place-items: center; transition: background 0.2s, color 0.2s;
+}
+.slx-eye svg { width: 20px; height: 20px; }
+.slx-eye:hover { background: #f2efff; color: var(--acc); }
+
+.slx-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 0 22px; font-size: 0.9rem; }
+.slx-row a { color: var(--acc); text-decoration: none; font-weight: 500; position: relative; }
+.slx-row a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: 100% 50%; transition: transform 0.3s; }
+.slx-row a:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+.slx-remember { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; color: var(--mut); user-select: none; }
+.slx-remember input { position: absolute; opacity: 0; width: 0; height: 0; }
+.slx-check { width: 20px; height: 20px; border-radius: 7px; border: 1.5px solid #cfc9e8; background: #fff; display: grid; place-items: center; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.slx-check svg { width: 12px; height: 12px; opacity: 0; transform: scale(0.4); transition: opacity 0.2s, transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.slx-remember input:checked + .slx-check { background: linear-gradient(135deg, var(--acc), var(--acc2)); border-color: transparent; }
+.slx-remember input:checked + .slx-check svg { opacity: 1; transform: scale(1); }
+.slx-remember input:focus-visible + .slx-check { box-shadow: 0 0 0 4px rgba(79, 107, 246, 0.18); }
+
+.slx-error {
+  display: flex; gap: 10px; align-items: flex-start; margin: 0 0 18px; padding: 13px 15px; border-radius: 14px;
+  background: #fff1ef; border: 1px solid #f6cfc9; color: var(--err); font-size: 0.9rem; line-height: 1.45;
+}
+.slx-error svg { width: 20px; height: 20px; flex: none; margin-top: 1px; }
+
+/* Primary button with fill wipe */
+.slx-submit {
+  position: relative; overflow: hidden; isolation: isolate; width: 100%; height: 58px; border: 0; border-radius: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: linear-gradient(135deg, var(--acc), var(--acc2)); color: #fff; font: inherit; font-size: 1.02rem; font-weight: 600; letter-spacing: 0.01em;
+  box-shadow: 0 14px 30px rgba(79, 107, 246, 0.3); transition: box-shadow 0.3s, filter 0.3s;
+  will-change: transform;
+}
+.slx-submit::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(135deg, #3d58e0, #6a47f0); transform: translateY(102%); transition: transform 0.5s cubic-bezier(0.7, 0, 0.2, 1); }
+.slx-submit:hover:not(:disabled)::before { transform: translateY(0); }
+.slx-submit:hover:not(:disabled) { box-shadow: 0 18px 38px rgba(79, 107, 246, 0.38); }
+.slx-arrow { width: 20px; height: 20px; transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.slx-submit:hover .slx-arrow { transform: translateX(5px); }
+.slx-submit:disabled { cursor: progress; filter: saturate(0.85); }
+.slx-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(255, 255, 255, 0.4); border-top-color: #fff; animation: slx-rot 0.75s linear infinite; }
+@keyframes slx-rot { to { transform: rotate(360deg); } }
+
+.slx-register { margin: 26px 0 0; text-align: center; color: var(--mut); font-size: 0.95rem; }
+.slx-register a { color: var(--acc); font-weight: 600; text-decoration: none; }
+.slx-register a:hover { text-decoration: underline; }
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 960px) {
+  .slx-shell { grid-template-columns: 1fr; padding: 12px; }
+  .slx-visual { border-radius: 26px; }
+  .slx-visual-in { min-height: 0; padding: 26px 24px 30px; }
+  .slx-story { margin: 22px 0 0; }
+  .slx-headline { font-size: clamp(2rem, 8vw, 2.7rem); }
+  .slx-floats, .slx-chips { display: none; }
+  .slx-brand-mobile { display: none; }
+  .slx-panel { padding: 22px 12px 36px; }
+  .slx-form { padding-top: 18px; }
+}
+@media (max-width: 480px) {
+  .slx-visual-in { padding: 22px 20px 26px; }
+  .slx-sub { font-size: 0.98rem; }
+  .slx-row { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slx-ic-a::after, .slx-spin { animation: none; }
+  .slx-submit::before, .slx-arrow, .slx-bar, .slx-field label { transition: none; }
+}
+
+/* Login logo image (replaces the old "E" mark + wordmark) */
+.slx-brand-img { display: block; height: 46px; width: auto; max-width: 240px; object-fit: contain; }
+@media (max-width: 960px) { .slx-brand-img { height: 40px; } }

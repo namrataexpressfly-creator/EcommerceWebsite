@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { AdminAuthProvider, useAdminAuth } from "./context/AdminAuthContext";
+import { DeveloperAuthProvider, useDeveloperAuth } from "./context/DeveloperAuthContext";
 import { DEFAULT_SLUG, isCustomDomainHost, getCurrentHostname, resolveStoreByDomain } from "./api/client";
 import { StoreSlugProvider } from "./context/StoreSlugContext";
 import { ToastProvider } from "./context/ToastContext";
@@ -49,12 +50,19 @@ import Returns from "./pages/seller/Returns";
 import Settings from "./pages/seller/Settings";
 import Kyc from "./pages/seller/Kyc";
 import PaymentSettings from "./pages/seller/PaymentSettings";
+import Plugins from "./pages/seller/Plugins";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminKyc from "./pages/admin/AdminKyc";
 import AdminSellers from "./pages/admin/AdminSellers";
 import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminPlugins from "./pages/admin/AdminPlugins";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import DeveloperProtectedRoute from "./components/DeveloperProtectedRoute";
+import DeveloperLogin from "./pages/developer/DeveloperLogin";
+import DeveloperPlugins from "./pages/developer/DeveloperPlugins";
+import DeveloperDocs from "./pages/developer/DeveloperDocs";
+// import SellerDeveloper from "./pages/seller/Developer";
 import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
 
@@ -82,20 +90,34 @@ function storeRoutes() {
   );
 }
 
-// /admin — sends a logged-in admin straight to the dashboard, otherwise to the login page.
+
 function AdminIndex() {
   const { token, loading } = useAdminAuth();
   if (loading) return <div className="page-loading">Loading…</div>;
   return <Navigate to={token ? "/admin/dashboard" : "/admin/login"} replace />;
 }
 
-// Wraps AdminLogin so a already-signed-in admin visiting /admin/login is bounced to the dashboard
-// instead of seeing the sign-in form again.
+
 function AdminLoginRoute() {
   const { token, loading } = useAdminAuth();
   if (loading) return <div className="page-loading">Loading…</div>;
   if (token) return <Navigate to="/admin/dashboard" replace />;
   return <AdminLogin />;
+}
+
+
+function DeveloperIndex() {
+  const { token, loading } = useDeveloperAuth();
+  if (loading) return <div className="page-loading">Loading…</div>;
+  return <Navigate to={token ? "/developer/plugins" : "/developer/login"} replace />;
+}
+
+
+function DeveloperLoginRoute() {
+  const { token, loading } = useDeveloperAuth();
+  if (loading) return <div className="page-loading">Loading…</div>;
+  if (token) return <Navigate to="/developer/plugins" replace />;
+  return <DeveloperLogin />;
 }
 
 function PlatformStoreLayout() {
@@ -206,6 +228,32 @@ function StoreApp() {
         }
       />
       <Route
+        path="/admin/plugins"
+        element={
+          <AdminProtectedRoute>
+            <AdminPlugins />
+          </AdminProtectedRoute>
+        }
+      />
+      <Route path="/developer" element={<DeveloperIndex />} />
+      <Route path="/developer/login" element={<DeveloperLoginRoute />} />
+      <Route
+        path="/developer/plugins"
+        element={
+          <DeveloperProtectedRoute>
+            <DeveloperPlugins />
+          </DeveloperProtectedRoute>
+        }
+      />
+      <Route
+        path="/developer/docs"
+        element={
+          <DeveloperProtectedRoute>
+            <DeveloperDocs />
+          </DeveloperProtectedRoute>
+        }
+      />
+      <Route
         path="/seller"
         element={
           <ProtectedRoute>
@@ -221,6 +269,7 @@ function StoreApp() {
         <Route path="product-variants" element={<ProductVariants />} />
         <Route path="categories" element={<Categories />} />
         <Route path="warehouses" element={<Warehouses />} />
+        <Route path="plugins" element={<Plugins />} />
         <Route path="tickets" element={<Tickets />} />
         <Route path="banners" element={<Banners />} />
         <Route path="coupons" element={<Coupons />} />
@@ -230,6 +279,7 @@ function StoreApp() {
         <Route path="settings" element={<Settings />} />
         <Route path="kyc" element={<Kyc />} />
         <Route path="payment-settings" element={<PaymentSettings />} />
+        {/* <Route path="developer" element={<SellerDeveloper />} /> */}
       </Route>
 
       <Route path="*" element={<NotFound />} />
@@ -243,9 +293,11 @@ export default function App() {
       <ConfirmProvider>
         <AuthProvider>
           <AdminAuthProvider>
-            <BrowserRouter>
-              <StoreApp />
-            </BrowserRouter>
+            <DeveloperAuthProvider>
+              <BrowserRouter>
+                <StoreApp />
+              </BrowserRouter>
+            </DeveloperAuthProvider>
           </AdminAuthProvider>
         </AuthProvider>
       </ConfirmProvider>

@@ -1,5 +1,23 @@
 
 export const LAYOUT_PRESETS = {
+  marketplace: {
+    radius: "12px",
+    radiusLg: "16px",
+    shadow: "0 6px 20px -14px rgba(0, 0, 0, 0.3)",
+    shadowLg: "0 24px 50px -26px rgba(0, 0, 0, 0.4)",
+    cardStyle: "border",
+    navStyle: "split",
+    heroStyle: "full-bleed",
+  },
+  mindleaf: {
+    radius: "14px",
+    radiusLg: "24px",
+    shadow: "0 10px 30px -18px rgba(23, 37, 29, 0.28)",
+    shadowLg: "0 28px 60px -28px rgba(23, 37, 29, 0.38)",
+    cardStyle: "minimal",
+    navStyle: "split",
+    heroStyle: "standard",
+  },
   classic: {
     radius: "4px",
     radiusLg: "6px",

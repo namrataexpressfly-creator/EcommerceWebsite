@@ -57,9 +57,17 @@ export default function StoreFooter({ slug, basePath = "", storeName, logoUrl, s
 
   return (
     <footer className="store-footer-full">
+      <section className="sf-cta">
+        <h2>Ready when you are.</h2>
+        <p>Browse the full collection and check out in a single page.</p>
+        <div className="sf-hero-cta">
+          <Link to={basePath || "/"} className="btn btn-primary btn-lg">Shop now</Link>
+          <Link to={`${basePath}/Contactus`} className="btn btn-ghost btn-lg">Contact us</Link>
+        </div>
+      </section>
       <div className="store-footer-inner">
 
-   
+
         <div className="footer-col footer-col-brand">
           <div className="brand footer-brand">
             {logoUrl && <img src={resolveMediaUrl(logoUrl)} alt={storeName} className="brand-logo" />}
@@ -121,7 +129,7 @@ export default function StoreFooter({ slug, basePath = "", storeName, logoUrl, s
           </Link>
         </div>
 
-  
+
         <div className="footer-col">
           <div className="footer-col-title">
             Support

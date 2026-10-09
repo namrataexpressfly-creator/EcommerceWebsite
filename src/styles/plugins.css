@@ -1,0 +1,394 @@
+/* Shipping plugins: seller Plugins page, Ship modal, admin Plugins page.
+   Uses the same theme tokens as index.css so dark mode works automatically. */
+
+.plug-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.plug-card {
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.plug-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.plug-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  object-fit: contain;
+  background: #fff;
+  flex: none;
+}
+
+.plug-logo-fallback {
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--brand-dark);
+  background: var(--brand-soft);
+}
+
+.plug-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.plug-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.plug-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.plug-note {
+  font-size: 0.8rem;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.plug-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.plug-field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.plug-hint {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.plug-copy {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.plug-copy code {
+  flex: 1;
+  font-size: 0.76rem;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--line-soft);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* ---- Ship modal ---- */
+.ship-step {
+  margin-bottom: 18px;
+}
+
+.ship-step > h4 {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--brand-dark);
+}
+
+.ship-options {
+  display: grid;
+  gap: 8px;
+}
+
+.ship-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+}
+
+.ship-option:hover:not(:disabled) {
+  border-color: var(--brand);
+}
+
+.ship-option:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ship-option-selected {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.ship-option-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.ship-option-title {
+  font-weight: 600;
+}
+
+.ship-option-sub {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.ship-price {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ship-pkg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.ship-done {
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.ship-done a {
+  color: inherit;
+  font-weight: 600;
+}
+
+/* ---- Orders table action cell ---- */
+.order-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: 5px 12px;
+  font-size: 0.82rem;
+}
+
+/* ---- Order detail: shipments ---- */
+.od-ship-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.88rem;
+}
+
+.od-ship-row:last-child {
+  border-bottom: 0;
+}
+
+/* ---- Admin plugin editor ---- */
+.adm-plug-block {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.adm-plug-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.adm-plug-json {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  min-height: 90px;
+  width: 100%;
+}
+
+.adm-plug-label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+/* ---- Seller: search filters + setup guide ---- */
+.plug-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0 18px;
+}
+
+.plug-pill {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.plug-pill.is-on {
+  background: var(--brand-soft);
+  color: var(--brand-dark);
+  border-color: var(--brand);
+}
+
+.plug-saved {
+  margin-left: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.plug-guide {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--brand-soft);
+  padding: 4px 14px;
+  margin-bottom: 16px;
+}
+
+.plug-guide summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 10px 0;
+  color: var(--brand-dark);
+}
+
+.plug-steps {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  counter-reset: plugstep;
+}
+
+.plug-steps li {
+  counter-increment: plugstep;
+  position: relative;
+  padding: 0 0 12px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.plug-steps li::before {
+  content: counter(plugstep);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.plug-steps li span {
+  color: var(--ink-soft);
+}
+
+.plug-doc-link {
+  display: inline-block;
+  margin: 0 0 12px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--brand-dark);
+  text-decoration: underline;
+}
+
+.plug-field .input {
+  margin-bottom: 0;
+}
+
+.plug-code {
+  margin: 4px 0 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Headings inside forms are normally small caps (.form-panel strong). Paths are case-sensitive, so keep them exact. */
+.plug-doc-title {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.plug-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* A single scrolling row of tabs (used on the Orders page) instead of wrapping onto several lines. */
+.plug-filters--scroll {
+  /* The Orders table can be wider than a phone, which stretches the page. Keep the tab row the width of the
+     screen and pinned in view so it scrolls by itself instead of dragging the whole page sideways. */
+  width: calc(100vw - 2rem);
+  max-width: 100%;
+  position: sticky;
+  left: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.plug-filters--scroll .plug-pill {
+  flex: 0 0 auto;
+  text-transform: capitalize;
+  white-space: nowrap;
+}

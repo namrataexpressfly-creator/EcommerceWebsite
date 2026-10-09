@@ -1,0 +1,53 @@
+/* Stripe-style API reference shown from Developer / Admin > Plugins > "API docs". */
+.pad-root { max-width: 1400px; }
+.pad-top h1 { margin: 12px 0 6px; font-size: 1.6rem; }
+.pad-ver { font-size: 1rem; color: var(--ink-soft); font-weight: 500; margin-left: 6px; }
+
+.pad-layout { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; margin-top: 20px; align-items: start; }
+.pad-nav { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 2px; font-size: 0.88rem; }
+.pad-nav-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); margin-bottom: 6px; }
+.pad-nav a { padding: 7px 10px; border-radius: 8px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.pad-nav a:hover { background: var(--brand-soft); }
+
+.pad-dot { font-size: 0.62rem; font-weight: 700; padding: 2px 5px; border-radius: 4px; }
+.pad-method { font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.03em; }
+.pad-post { background: #e3f1ff; color: #0b5cad; }
+.pad-get { background: #e2f5e9; color: #1c6b3a; }
+.pad-put { background: #fdf0d8; color: #93650f; }
+.pad-delete { background: #fbeae7; color: #b3402f; }
+
+.pad-intro { padding: 0 0 24px; border-bottom: 1px solid var(--line); }
+.pad-flow { padding-left: 20px; line-height: 1.7; margin: 8px 0 16px; }
+
+.pad-endpoint { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding: 32px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 76px; }
+.pad-left h2 { margin: 0 0 10px; font-size: 1.35rem; }
+.pad-left h4 { margin: 22px 0 8px; font-size: 0.95rem; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.pad-route { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.pad-route code { word-break: break-all; font-size: 0.85rem; }
+.pad-when { font-size: 0.92rem; line-height: 1.55; color: var(--ink-soft); }
+
+.pad-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.pad-table th { text-align: left; font-size: 0.74rem; color: var(--ink-faint); text-transform: uppercase; padding: 4px 8px 4px 0; }
+.pad-table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; word-break: break-word; }
+.pad-key { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; white-space: nowrap; }
+.pad-notes { padding-left: 18px; line-height: 1.6; font-size: 0.88rem; margin: 6px 0; }
+
+.pad-right { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 76px; align-self: start; min-width: 0; }
+.pad-panel { background: #1b1f27; border-radius: 10px; overflow: hidden; color: #e6e8ee; }
+.pad-tabs { display: flex; align-items: center; gap: 4px; padding: 8px 12px; background: #252a34; font-size: 0.78rem; }
+.pad-panel-title { margin-right: auto; color: #aab1c0; font-weight: 600; }
+.pad-tabs button { background: transparent; border: 0; color: #aab1c0; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; }
+.pad-tabs button.is-on { background: #3a4150; color: #fff; }
+.pad-code { position: relative; }
+.pad-code pre { margin: 0; padding: 14px 16px; overflow: auto; max-height: 380px; font-size: 0.8rem; line-height: 1.55; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #cfe8d5; }
+.pad-copy { position: absolute; right: 10px; top: 8px; background: #3a4150; color: #fff; border: 0; border-radius: 6px; font-size: 0.72rem; padding: 3px 9px; cursor: pointer; z-index: 1; }
+.pad-intro .pad-panel { margin-top: 6px; max-width: 520px; }
+
+@media (max-width: 1100px) {
+  .pad-endpoint { grid-template-columns: 1fr; }
+  .pad-right { position: static; }
+}
+@media (max-width: 800px) {
+  .pad-layout { grid-template-columns: 1fr; }
+  .pad-nav { position: static; flex-direction: row; flex-wrap: wrap; }
+}

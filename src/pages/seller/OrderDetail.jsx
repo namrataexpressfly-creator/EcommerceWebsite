@@ -3,7 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import client, { resolveMediaUrl } from "../../api/client";
 import { Loading, ErrorBox, StatusBadge } from "../../components/Ui";
 import { formatMoney, formatDate } from "../../utils/format";
+import ShipModal from "../../components/ShipModal";
+import { useToast } from "../../context/ToastContext";
 import "../../styles/order-detail.css";
+import "../../styles/plugins.css";
 
 const COURIER_LABELS = {
   delhivery: "Delhivery",
@@ -71,6 +74,39 @@ export default function OrderDetail() {
   const [allWarehouses, setAllWarehouses] = useState([]);
   const [newWarehouse, setNewWarehouse] = useState("");
   const [moveError, setMoveError] = useState("");
+  const [shipOpen, setShipOpen] = useState(false);
+  const [shipments, setShipments] = useState([]);
+  const [trackingId, setTrackingId] = useState(null);
+  const toast = useToast();
+
+  const loadShipments = () =>
+    client
+      .get(`/seller/shipping/${id}/shipments`)
+      .then(({ data: list }) => setShipments(list))
+      .catch(() => {});
+
+  const reloadAll = () => {
+    client.get(`/seller/orders/${id}`).then(({ data: fresh }) => setData(fresh));
+    loadShipments();
+  };
+
+  const refreshTracking = async (shipmentId) => {
+    setTrackingId(shipmentId);
+    try {
+      await client.post(`/seller/shipping/shipment/${shipmentId}/track`);
+      toast.success("Tracking updated.");
+      reloadAll();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setTrackingId(null);
+    }
+  };
+
+  useEffect(() => {
+    loadShipments();
+
+  }, [id]);
 
   const openChange = async () => {
     setChanging(true);
@@ -128,6 +164,9 @@ export default function OrderDetail() {
 
   const { order, customer, store, line_items: items, package: pack, pickup_warehouses: pickups } = data;
   const ship = order.shipment || {};
+  const canShip =
+    ["pending", "confirmed", "packed", "shipped"].includes(order.status) &&
+    ["paid", "cod_pending"].includes(order.payment_status);
   const addr = order.shipping_address || {};
   const online = order.payment_method === "online";
   const events = [...(order.status_history || [])].reverse();
@@ -136,6 +175,8 @@ export default function OrderDetail() {
   return (
     <div className="od-page">
       {crumbs("Detail order")}
+
+      {shipOpen && <ShipModal orderId={id} onClose={() => setShipOpen(false)} onShipped={reloadAll} />}
 
       <div className="od-grid">
         <div className="od-main">
@@ -161,7 +202,7 @@ export default function OrderDetail() {
                 <StatusBadge status={order.status} />
               </Tile>
               <Tile label="Payment Mode">{online ? "Prepaid" : "Cash on delivery"}</Tile>
-              <Tile label="Logistic">{COURIER_LABELS[ship.courier_partner] || "—"}</Tile>
+              <Tile label="Logistic">{COURIER_LABELS[ship.courier_partner] || ship.courier_partner || "—"}</Tile>
               <Tile label="Shipping Method">{SHIPMENT_TYPE_LABELS[ship.type] || "—"}</Tile>
               <Tile label="Store">
                 {dash(store.name)}
@@ -357,6 +398,45 @@ export default function OrderDetail() {
         <aside className="od-aside">
           <section className="od-card">
             <h2 className="od-tab">Tracking Info</h2>
+
+            {canShip && (
+              <div style={{ marginBottom: 12 }}>
+                <button type="button" className="btn btn-primary btn-sm" onClick={() => setShipOpen(true)}>
+                  Ship order
+                </button>
+              </div>
+            )}
+
+            {shipments
+              .filter((sh) => sh.is_active)
+              .map((sh) => (
+                <div className="od-ship-row" key={sh._id}>
+                  <div>
+                    <strong>{sh.courier_name || "Courier"}</strong> · {String(sh.status).replace(/_/g, " ")}
+                  </div>
+                  <div>AWB: {sh.awb_number}</div>
+                  <div className="order-actions">
+                    {sh.tracking_url && (
+                      <a href={sh.tracking_url} target="_blank" rel="noreferrer">
+                        Track ↗
+                      </a>
+                    )}
+                    {sh.label_url && (
+                      <a href={sh.label_url} target="_blank" rel="noreferrer">
+                        Label ↗
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      disabled={trackingId === sh._id}
+                      onClick={() => refreshTracking(sh._id)}
+                    >
+                      {trackingId === sh._id ? "Updating…" : "Refresh"}
+                    </button>
+                  </div>
+                </div>
+              ))}
 
             {(ship.awb_number || ship.courier_partner) && (
               <div className="od-track-meta">

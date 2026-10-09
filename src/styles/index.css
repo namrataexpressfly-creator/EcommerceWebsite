@@ -16,7 +16,7 @@
   --brand-dark: #12432f;
   --brand-soft: #e7f0e9;
 
-  
+
   --gold: #a8763e;
   --gold-dark: #8a5f2f;
   --gold-soft: #f4ead8;
@@ -1821,12 +1821,43 @@ select.input:disabled {
 }
 
 
-.loading-box,
+.loading-box {
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+}
+
 .empty-state {
   padding: 60px 20px;
   text-align: center;
   color: var(--ink-faint);
   font-size: 0.9rem;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--line, #e2e2e2);
+  border-top-color: var(--brand);
+  animation: spinner-spin 0.7s linear infinite;
+  flex: none;
+}
+
+.spinner-inline {
+  border-width: 2px;
+  vertical-align: middle;
+}
+
+@keyframes spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .error-box {
@@ -3611,7 +3642,7 @@ select.input:disabled {
 
 .category-tile-thumb {
   aspect-ratio: 1 / 1;
-  border-radius: var(--radius-lg);
+  border-radius: 50%;
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--line-soft);
@@ -3650,7 +3681,7 @@ select.input:disabled {
   justify-content: center;
   text-align: center;
   border: 1px dashed var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: 50%;
   aspect-ratio: 1 / 1;
   font-weight: 600;
   font-size: 0.95rem;
@@ -4081,7 +4112,7 @@ select.input:disabled {
   font-weight: 800;
   font-size: 1.6rem;
   letter-spacing: -0.02em;
-  color: #fff;
+  /* color: #fff; */
 }
 
 .adm-wordmark-sm {
@@ -4102,89 +4133,235 @@ select.input:disabled {
   vertical-align: middle;
 }
 
-/* --- Login screen: split panel ------------------------------------ */
+/* --- Login screen: illustrated card -------------------------------- */
 .adm-login {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  font-family: var(--adm-font);
-}
-
-.adm-login-brand {
-  background: linear-gradient(155deg, #171B24 0%, #232B45 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px;
+  padding: 40px 24px;
+  font-family: var(--adm-font);
+    background:
+    radial-gradient(circle at 10% 10%, #D9E2FF 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, #DCCBFF 0%, transparent 42%),
+    linear-gradient(135deg, #F8FAFF 0%, #F5F1FF 50%, #EEF2FF 100%);
+  /* background: radial-gradient(circle at 15% 15%, #6D4FE0 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, #3B2E8C 0%, transparent 50%),
+    linear-gradient(150deg, #4A2FC9 0%, #6938D3 45%, #8B4FE0 100%); */
   position: relative;
   overflow: hidden;
 }
 
-.adm-login-brand::before {
+.adm-login::before,
+.adm-login::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 22px 22px;
-  opacity: 0.5;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  filter: blur(2px);
 }
 
-.adm-login-brand-inner {
+.adm-login::before {
+  width: 320px;
+  height: 320px;
+  top: -90px;
+  left: -90px;
+}
+
+.adm-login::after {
+  width: 240px;
+  height: 240px;
+  bottom: -70px;
+  right: 6%;
+}
+
+.adm-login-frame {
   position: relative;
-  max-width: 380px;
+  width: 100%;
+  max-width: 920px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 28px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 0;
+  box-shadow: 0 40px 80px -30px rgba(26, 12, 74, 0.55);
 }
 
-.adm-login-brand .adm-tag {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-.adm-login-copy {
-  margin-top: 22px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.98rem;
-  line-height: 1.6;
-  max-width: 34ch;
-}
-
-.adm-login-form-side {
-  background: var(--adm-bg);
+.adm-login-illustration-panel {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
+  padding: 36px;
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.adm-login-illustration {
+  width: 100%;
+  max-width: 380px;
+}
+
+.adm-login-panel {
+  background: linear-gradient(165deg, #6938D3 0%, #5B3FD9 100%);
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 34px;
 }
 
 .adm-login-form {
   width: 100%;
-  max-width: 340px;
-  background: var(--adm-surface);
-  border: 1px solid var(--adm-line);
-  border-radius: 14px;
-  padding: 36px 32px;
-  box-shadow: 0 1px 2px rgba(23, 27, 36, 0.04);
+  max-width: 280px;
 }
 
 .adm-login-form h1 {
   font-family: var(--adm-font);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--adm-ink);
-  margin: 0;
+  color: #fff;
+  margin: 0 0 22px;
 }
 
-.adm-login-sub {
-  color: var(--adm-ink-soft);
-  font-size: 0.9rem;
-  margin: 6px 0 26px;
+.adm-login-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.adm-login-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 17px;
+  height: 17px;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.adm-login-input-group .adm-login-field {
+  width: 100%;
+  padding: 12px 14px 12px 38px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.92rem;
+  font-family: var(--adm-font);
+}
+
+.adm-login-input-group .adm-login-field::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.adm-login-input-group .adm-login-field:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.adm-login-input-group .adm-login-field-pw {
+  padding-right: 38px;
+}
+
+.adm-login-toggle {
+  position: absolute;
+  right: 13px;
+  background: none;
+  border: none;
+  padding: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+}
+
+.adm-login-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+
+.adm-login-toggle:hover {
+  color: #fff;
+}
+
+.adm-login-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px 0 20px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.adm-login-remember {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  color:black;
+}
+
+.adm-login-remember input {
+  width: 14px;
+  height: 14px;
+  accent-color: #F2B134;
+}
+
+.adm-login-error {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+}
+
+.adm-login-submit {
+  width: 100%;
+  background: #F2B134;
+  color: #2A1F63;
+  border: none;
+  border-radius: 999px;
+  padding: 13px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.adm-login-submit:hover {
+  filter: brightness(1.05);
+}
+
+.adm-login-submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.adm-login-footline {
+  position: relative;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  margin-top: 18px;
+}
+
+.adm-login-footline strong {
+  color: #fff;
 }
 
 @media (max-width: 860px) {
-  .adm-login {
+  .adm-login-frame {
     grid-template-columns: 1fr;
+    max-width: 380px;
   }
-  .adm-login-brand {
-    padding: 36px 28px;
+  .adm-login-illustration-panel {
+    display: none;
   }
 }
 
@@ -4456,6 +4633,28 @@ select.input:disabled {
   padding: 56px 24px;
   text-align: center;
   color: var(--adm-ink-soft);
+}
+
+.adm-loading {
+  background: var(--adm-surface);
+  border: 1px dashed var(--adm-line);
+  border-radius: 14px;
+  padding: 56px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--adm-ink-soft);
+}
+
+.adm-spinner {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 3px solid var(--adm-line);
+  border-top-color: var(--adm-accent);
+  animation: spinner-spin 0.7s linear infinite;
 }
 
 .adm-empty-mark {
@@ -5144,4 +5343,73 @@ a.adm-btn { display: inline-flex; align-items: center; text-decoration: none; }
   .adm-topbar { padding: 0 16px; }
   .adm-main { padding: 22px 16px 60px; }
   .adm-profile-text { display: none; }
+}
+
+/* ------------------------------------------------------------------
+   Shop by Category — round images (storefront).
+   Extra ".category-tile-grid" in the selectors makes these win over the
+   square 4/5 tiles in storefront-pro.css regardless of load order.
+------------------------------------------------------------------ */
+.store-shell .category-tile-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 26px 18px;
+}
+
+.store-shell .category-tile-grid .category-tile {
+  align-items: center;
+  gap: 12px;
+}
+
+.store-shell .category-tile-grid .category-tile-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 4px 14px rgba(15, 14, 10, 0.08);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.store-shell .category-tile-grid .category-tile:hover .category-tile-thumb {
+  box-shadow: 0 8px 22px rgba(15, 14, 10, 0.16);
+  transform: translateY(-2px);
+}
+
+.store-shell .category-tile-grid .category-tile-name {
+  position: static;
+  padding: 0;
+  color: var(--ink);
+  background: none;
+  border-radius: 0;
+  text-align: center;
+  font-size: 0.98rem;
+}
+
+.store-shell .category-tile-grid .category-tile-discover {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  align-self: start;
+}
+
+@media (max-width: 1000px) {
+  .store-shell .category-tile-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .store-shell .category-tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 12px;
+  }
+  .store-shell .category-tile-grid .category-tile-name {
+    position: static;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+  .store-shell .category-tile-grid .category-tile-discover {
+    grid-column: 1 / -1;
+    aspect-ratio: auto;
+    border-radius: 999px;
+    padding: 16px;
+  }
 }

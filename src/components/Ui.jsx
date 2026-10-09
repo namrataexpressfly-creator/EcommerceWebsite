@@ -1,5 +1,20 @@
 export function Loading({ label = "Loading…" }) {
-  return <div className="loading-box">{label}</div>;
+  return (
+    <div className="loading-box">
+      <span className="spinner" aria-hidden="true" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
+export function Spinner({ size = 16 }) {
+  return (
+    <span
+      className="spinner spinner-inline"
+      style={{ width: size, height: size }}
+      aria-hidden="true"
+    />
+  );
 }
 
 export function ErrorBox({ message }) {
