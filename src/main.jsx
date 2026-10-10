@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./styles/index.css";
+import "./styles/dashboard-responsive.css";
 import "./styles/storefront-soft.css"; // must come after index.css so the storefront overrides win
 import "./i18n";
 import { ThemeProvider } from "./context/ThemeContext.jsx";

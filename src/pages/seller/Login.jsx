@@ -75,7 +75,7 @@ export default function Login() {
           },
         });
 
-
+    
         gsap.to(".slx-orb-a", { x: 60, y: 40, duration: 9, ease: "sine.inOut", yoyo: true, repeat: -1 });
         gsap.to(".slx-orb-b", { x: -50, y: -45, duration: 11, ease: "sine.inOut", yoyo: true, repeat: -1 });
         gsap.to(".slx-orb-c", { x: 40, y: -30, duration: 13, ease: "sine.inOut", yoyo: true, repeat: -1 });
@@ -180,7 +180,7 @@ export default function Login() {
   return (
     <div className="slx-page" ref={root}>
       <div className="slx-shell">
-
+     
         <aside className="slx-visual" aria-hidden="false">
           <span className="slx-orb slx-orb-a" />
           <span className="slx-orb slx-orb-b" />
@@ -210,7 +210,7 @@ export default function Login() {
           </div>
         </aside>
 
-
+  
         <main className="slx-panel">
           <div className="slx-top">
             <div className="slx-brand slx-brand-mobile">

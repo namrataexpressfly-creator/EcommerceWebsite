@@ -120,7 +120,7 @@ export default function Register() {
   const [logoFile, setLogoFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState("");
 
-
+ 
 
   const set = (key) => (e) => {
     const value = e.target.value;
@@ -154,13 +154,13 @@ export default function Register() {
 
     if (!file) return;
 
-
+   
     if (!file.type.startsWith("image/")) {
       setError("Please select a valid image file.");
       return;
     }
 
-
+   
     if (file.size > 5 * 1024 * 1024) {
       setError("Logo image must be smaller than 5MB.");
       return;
@@ -169,7 +169,7 @@ export default function Register() {
     setError("");
     setLogoFile(file);
 
-
+   
     if (logoPreview) {
       URL.revokeObjectURL(logoPreview);
     }
@@ -191,7 +191,7 @@ export default function Register() {
     }
   };
 
-
+ 
 
   useEffect(() => {
     return () => {
@@ -285,7 +285,7 @@ export default function Register() {
 
     setError("");
 
-
+  
     const validationError = validateForm();
 
     if (validationError) {
@@ -296,10 +296,10 @@ export default function Register() {
     setLoading(true);
 
     try {
-
+   
       await register(form);
 
-
+  
       if (logoFile) {
         try {
           const url = await uploadLogoImage(
@@ -313,7 +313,7 @@ export default function Register() {
             }
           );
         } catch (logoError) {
-
+         
           console.error(
             "Logo upload failed:",
             logoError
@@ -321,7 +321,7 @@ export default function Register() {
         }
       }
 
-
+      
       navigate("/seller/kyc");
     } catch (err) {
       setError(
@@ -377,7 +377,7 @@ export default function Register() {
         noValidate
       >
 
-
+   
         <div className="slp-field">
           <input
             id="rg-name"
@@ -409,7 +409,7 @@ export default function Register() {
           </label>
         </div>
 
-
+  
 
         <div className="slp-field slp-prefixed phone-field">
           <span className="slp-pfx">+91</span>
@@ -435,7 +435,7 @@ export default function Register() {
           </label>
         </div>
 
-
+       
         <div className="slp-field">
           <input
             id="rg-pass"
@@ -474,7 +474,7 @@ export default function Register() {
           </button>
         </div>
 
-
+    
 
         {form.password && (
           <div
@@ -563,7 +563,7 @@ export default function Register() {
           </em>
         </span>
 
-
+  
 
         <div className="slp-upload">
 
@@ -640,7 +640,7 @@ export default function Register() {
           </div>
         )}
 
-
+       
 
         <div className="slp-actions slp-anim">
           <button

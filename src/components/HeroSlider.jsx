@@ -58,7 +58,7 @@ export default function HeroSlider({ slug, basePath = "", storeName, headline = 
     const changed = prevEl && prevEl !== activeEl && !reduce;
 
     if (changed) {
-
+      // new slide wipes in from the right while the old one drifts left
       tl.set(prevEl, { zIndex: 1, visibility: "visible", clipPath: "none" }, 0);
       tl.set(activeEl, { zIndex: 2, visibility: "visible", clipPath: "inset(0 0 0 100%)" }, 0);
       tl.to(activeEl, { clipPath: "inset(0 0 0 0%)", duration: 1.15, ease: "expo.inOut" }, 0);
@@ -70,7 +70,7 @@ export default function HeroSlider({ slug, basePath = "", storeName, headline = 
     }
 
     if (mediaEl && !reduce) {
-
+      // slow settle-in zoom, so the photo is always gently moving
       tl.set(mediaEl, { scale: 1 }, 0);
     }
 
@@ -89,7 +89,7 @@ export default function HeroSlider({ slug, basePath = "", storeName, headline = 
     if (slides.length === 0) return;
     animateTo(index, prevIndexRef.current);
     prevIndexRef.current = index;
-
+  
   }, [index, slides.length]);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ export default function HeroSlider({ slug, basePath = "", storeName, headline = 
   if (!bannersLoaded) return <div className="hero-slider-placeholder" />;
 
   if (slides.length === 0) {
-
+    // No banners set by the seller: editorial hero with a strip of real product photos
     const tiles = (products || []).filter((p) => p.images?.[0]).slice(0, 3);
     const placeholders = Array.from({ length: Math.max(0, 3 - tiles.length) });
     const scrollToProducts = () =>

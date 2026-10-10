@@ -67,7 +67,7 @@ export default function StoreFooter({ slug, basePath = "", storeName, logoUrl, s
       </section>
       <div className="store-footer-inner">
 
-
+   
         <div className="footer-col footer-col-brand">
           <div className="brand footer-brand">
             {logoUrl && <img src={resolveMediaUrl(logoUrl)} alt={storeName} className="brand-logo" />}
@@ -129,7 +129,7 @@ export default function StoreFooter({ slug, basePath = "", storeName, logoUrl, s
           </Link>
         </div>
 
-
+  
         <div className="footer-col">
           <div className="footer-col-title">
             Support

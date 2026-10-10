@@ -105,7 +105,7 @@ export default function OrderDetail() {
 
   useEffect(() => {
     loadShipments();
-
+    
   }, [id]);
 
   const openChange = async () => {

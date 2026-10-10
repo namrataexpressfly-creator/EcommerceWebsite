@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import { NavLink, Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
@@ -170,7 +171,10 @@ function getSections(t) {
         { to: "/seller/settings", label: t("dashboard.nav.storeSettings"), icon: Icon.settings },
       ],
     },
-
+      // {
+      //   label: t("dashboard.sections.developer"),
+      //   items: [{ to: "/seller/developer", label: t("dashboard.nav.apiReference"), icon: Icon.developer }],
+      // },
   ];
 }
 
@@ -179,6 +183,24 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const [navOpen, setNavOpen] = useState(false);
+
+  // close the mobile menu after navigating, on Escape, and lock page scroll while it is open
+  useEffect(() => {
+    setNavOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!navOpen) return undefined;
+    const onKey = (e) => e.key === "Escape" && setNavOpen(false);
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [navOpen]);
 
   const kycStatus = seller?.kyc?.status || "not_submitted";
   const kycApproved = kycStatus === "approved";
@@ -209,9 +231,20 @@ export default function DashboardLayout() {
 
   return (
     <div className="dash-shell">
-      <aside className="dash-sidebar">
+      <div className={`dash-backdrop${navOpen ? " is-open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
+      <aside className={`dash-sidebar${navOpen ? " is-open" : ""}`} id="dash-sidebar" aria-label="Seller menu">
         <div className="dash-brand-row">
           <div className="dash-brand">{t("dashboard.brand")}</div>
+          <button
+            type="button"
+            className="dash-sidebar-close"
+            aria-label={t("dashboard.closeMenu", { defaultValue: "Close menu" })}
+            onClick={() => setNavOpen(false)}
+          >
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true">
+              <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
         </div>
         <div className="dash-store">{seller?.store_slug}</div>
         <nav className="dash-nav">
@@ -250,7 +283,21 @@ export default function DashboardLayout() {
       </aside>
       <div className="dash-body">
         <header className="dash-topbar">
-          <span>{t("dashboard.signedInAs", { name: seller?.name })}</span>
+          <div className="dash-topbar-left">
+            <button
+              type="button"
+              className="dash-menu-btn"
+              aria-label={t("dashboard.openMenu", { defaultValue: "Open menu" })}
+              aria-expanded={navOpen}
+              aria-controls="dash-sidebar"
+              onClick={() => setNavOpen(true)}
+            >
+              <svg viewBox="0 0 20 20" width="20" height="20" fill="none" aria-hidden="true">
+                <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </button>
+            <span className="dash-topbar-text">{t("dashboard.signedInAs", { name: seller?.name })}</span>
+          </div>
           <div className="prefs-controls">
             <LanguageSwitcher />
             <ThemeToggle />

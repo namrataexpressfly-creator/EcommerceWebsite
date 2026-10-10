@@ -31,7 +31,7 @@ const Title = ({ a, b }) => (
 export default function Landing() {
   const rootRef = useRef(null);
   const navigate = useNavigate();
-  useLandingAnimations(rootRef, navigate);
+  useLandingAnimations(rootRef, navigate); 
 
   return (
     <div className="lp" ref={rootRef}>
@@ -44,7 +44,7 @@ export default function Landing() {
         <div className="lp-loader-bar"><i /></div>
         <div className="lp-loader-in">
           <div>
-
+    
             <span className="lp-loader-brand">
   <img
     src="/logo-Expressfly.png"

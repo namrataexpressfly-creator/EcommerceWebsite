@@ -213,7 +213,7 @@ export default function StoreHome() {
   const minPrice = searchParams.get("min_price") || "";
   const maxPrice = searchParams.get("max_price") || "";
   const availabilityParam = searchParams.get("availability") || "";
-  const variantsParam = searchParams.get("variants") || "";
+  const variantsParam = searchParams.get("variants") || ""; 
   const page = Number(searchParams.get("page") || 1);
   const limit = 12;
 
@@ -358,7 +358,7 @@ export default function StoreHome() {
     }, 500);
 
     return () => clearTimeout(timer);
-
+  
   }, [slug, q, category, minPrice, maxPrice, sort, page, availabilityParam, variantsParam]);
 
 
