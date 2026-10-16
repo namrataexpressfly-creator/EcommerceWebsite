@@ -14,7 +14,7 @@ function PluginLogo({ plugin }) {
   return <div className="plug-logo plug-logo-fallback">{plugin.app_name?.[0]?.toUpperCase()}</div>;
 }
 
-// Steps written by the plugin developer. If none were written we generate sensible ones.
+
 function defaultSteps(plugin) {
   const need = plugin.attributes.filter((a) => a.is_required).map((a) => a.label || a.name);
   const steps = [
@@ -27,9 +27,11 @@ function defaultSteps(plugin) {
       title: "Paste them below",
       description: plugin.environments.length > 1 ? "Choose Sandbox first if you want to test safely, then Live when you are ready." : "Enter each value in the matching box.",
     },
-    { title: "Click \"Save & test connection\"", description: "You should see \"Connected successfully\". If not, re-check the values you pasted." },
     plugin.integration === "standard"
-      ? { title: "Tracking switches on by itself", description: `When you save and test the connection, Expressfly tells ${plugin.app_name} where to send delivery updates. There is nothing to paste.` }
+      ? { title: "Click \"Install\"", description: "You should see \"Installed successfully\". If not, re-check the values you pasted." }
+      : { title: "Click \"Save & test connection\"", description: "You should see \"Connected successfully\". If not, re-check the values you pasted." },
+    plugin.integration === "standard"
+      ? { title: "Tracking switches on by itself", description: `Install also tells ${plugin.app_name} where to send delivery updates. There is nothing to paste.` }
       : { title: "Add the webhook URL", description: `Copy the Webhook URL at the bottom of this window and paste it in ${plugin.app_name}'s dashboard so delivery updates reach your orders.` },
     { title: "Turn the plugin On", description: "Close this window and switch the plugin to Active. It will then appear when you click Ship on an order." },
   ];
@@ -69,6 +71,7 @@ function ConfigureModal({ plugin, onClose, onChanged }) {
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
   const [error, setError] = useState("");
+  const isStandard = plugin.integration === "standard";
 
   const saved = Object.fromEntries(sp.attributes.map((a) => [a.name, a]));
 
@@ -102,8 +105,9 @@ function ConfigureModal({ plugin, onClose, onChanged }) {
     if (!data) return;
     setTesting(true);
     try {
-      const { data: res } = await client.post(`/seller/plugins/store/${sp.id}/test`);
-      // A warning means we connected but could not switch on tracking: do not show it as a plain success.
+      const { data: res } = await client.post(`/seller/plugins/store/${sp.id}/${isStandard ? "install" : "test"}`);
+      if (res.store_plugin) onChanged(plugin.id, res.store_plugin);
+     
       (res.warning ? toast.error : toast.success)(res.message || "Connected.");
     } catch (err) {
       setError(err.message);
@@ -132,7 +136,7 @@ function ConfigureModal({ plugin, onClose, onChanged }) {
             Close
           </button>
           <button type="button" className="btn btn-ghost" onClick={onTest} disabled={saving || testing}>
-            {testing ? "Testing…" : "Save & test connection"}
+            {isStandard ? (testing ? "Installing…" : sp.webhook_registered ? "Reinstall" : "Install") : testing ? "Testing…" : "Save & test connection"}
           </button>
           <button type="button" className="btn btn-primary" onClick={onSave} disabled={saving}>
             {saving ? "Saving…" : "Save"}
@@ -186,6 +190,13 @@ function ConfigureModal({ plugin, onClose, onChanged }) {
         );
       })}
 
+      {isStandard && sp.webhook_registered && (
+        <div className="plug-field">
+          <span className="plug-saved">✓ Installed. Tracking updates are switched on.</span>
+        </div>
+      )}
+
+      {!isStandard && (
       <div className="plug-field">
         <label>Webhook URL</label>
         <div className="plug-copy">
@@ -200,6 +211,7 @@ function ConfigureModal({ plugin, onClose, onChanged }) {
             : `Paste this in ${plugin.app_name}'s dashboard so delivery updates reach your orders.`}
         </span>
       </div>
+      )}
     </Modal>
   );
 }

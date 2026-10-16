@@ -1,0 +1,45 @@
+/* Courier rate list in the Ship window: partner, pickup, delivery, TAT, total charges and a Ship Now button */
+.ship-rate-table { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+.ship-rate-head,
+.ship-rate-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.5fr) 118px 118px 70px minmax(120px, 1fr) 104px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+.ship-rate-head { background: var(--line-soft); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
+.ship-rate-row { border-top: 1px solid var(--line); cursor: pointer; transition: background-color 0.2s ease; }
+.ship-rate-row:hover { background: var(--line-soft); }
+.ship-rate-row.is-selected { background: var(--brand-soft); }
+.ship-rate-partner { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.ship-rate-partner img { width: 46px; height: 34px; object-fit: contain; flex-shrink: 0; }
+.ship-rate-partner strong { font-size: 0.92rem; overflow-wrap: anywhere; }
+.ship-rate-chip { display: inline-block; padding: 3px 10px; border: 1.5px solid var(--ink); border-radius: 999px; font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
+.ship-rate-tat { font-weight: 700; color: var(--gold, #b8761a); text-align: center; }
+.ship-rate-total { display: flex; flex-direction: column; gap: 2px; }
+.ship-rate-total strong { font-size: 1rem; color: var(--brand); }
+.ship-rate-total small { font-size: 0.72rem; color: var(--ink-soft); }
+.ship-rate-action { text-align: right; }
+
+@media (max-width: 760px) {
+  .ship-rate-head { display: none; }
+  .ship-rate-row { grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+  .ship-rate-partner,
+  .ship-rate-action { grid-column: 1 / -1; }
+  .ship-rate-action { text-align: left; }
+  .ship-rate-row > [data-label]:not(.ship-rate-partner)::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .ship-rate-tat { text-align: left; }
+}
+
+.ship-rate-name { display: flex; flex-direction: column; min-width: 0; }
+.ship-rate-name small { font-size: 0.72rem; color: var(--ink-soft); }

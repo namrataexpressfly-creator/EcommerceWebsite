@@ -55,6 +55,13 @@ const Icon = {
       <circle cx="13.2" cy="6.8" r="1.15" fill="currentColor" />
     </svg>
   ),
+  plugins: (p) => (
+    <svg viewBox="0 0 20 20" width="17" height="17" fill="none" {...p}>
+      <path d="M8 3.2h4v2.6a1.6 1.6 0 1 0 0 3.2V11.6H8.6a1.6 1.6 0 1 1-3.2 0H3.2V8H8V3.2Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M12 11.6v5.2H3.2v-5.2" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M12 16.8h5V8.8h-5" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  ),
   banners: (p) => (
     <svg viewBox="0 0 20 20" width="17" height="17" fill="none" {...p}>
       <rect x="2.5" y="4" width="15" height="11" rx="1.6" stroke="currentColor" strokeWidth="1.6" />
@@ -150,6 +157,7 @@ function getSections(t) {
         { to: "/seller/coupons", label: t("dashboard.nav.coupons"), icon: Icon.coupons },
         { to: "/seller/returns", label: t("dashboard.nav.returns"), icon: Icon.returns },
         { to: "/seller/wallet", label: t("dashboard.nav.wallet"), icon: Icon.wallet },
+        { to: "/seller/plugins", label: t("dashboard.nav.plugins", { defaultValue: "Plugins" }), icon: Icon.plugins },
       ],
     },
     {
@@ -185,7 +193,6 @@ export default function DashboardLayout() {
   const { t } = useTranslation();
   const [navOpen, setNavOpen] = useState(false);
 
-  // close the mobile menu after navigating, on Escape, and lock page scroll while it is open
   useEffect(() => {
     setNavOpen(false);
   }, [location.pathname]);

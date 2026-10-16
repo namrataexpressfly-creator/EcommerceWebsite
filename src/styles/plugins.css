@@ -392,3 +392,20 @@
   text-transform: capitalize;
   white-space: nowrap;
 }
+
+/* Ship modal: pickup address cards, courier partner details */
+.ship-badge {
+  display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; vertical-align: middle;
+  font-size: 0.68rem; font-weight: 600; background: var(--line-soft); color: var(--ink-soft);
+}
+.ship-badge-green { background: var(--brand-soft); color: var(--brand-dark); }
+.ship-tick { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 0.78rem; font-weight: 700; color: #fff; background: var(--brand); }
+.ship-route { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 10px; padding: 9px 12px; border-radius: 10px; background: var(--bg); border: 1px dashed var(--line); font-size: 0.84rem; }
+.ship-route-arrow { color: var(--brand); font-weight: 700; }
+.ship-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ship-chip { font-size: 0.74rem; padding: 2px 8px; border-radius: 6px; background: var(--line-soft); color: var(--ink-soft); }
+.ship-chip strong { color: var(--ink); font-weight: 600; }
+.ship-option { min-width: 0; max-width: 100%; }
+.ship-option-main { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.ship-price { flex: none; margin-left: 12px; white-space: nowrap; }
+.ship-logo { flex: none; width: 44px; height: 44px; margin-right: 12px; object-fit: contain; border-radius: 8px; border: 1px solid var(--line); background: #fff; padding: 3px; }
