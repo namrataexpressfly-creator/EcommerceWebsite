@@ -1,0 +1,24 @@
+/* Courier tracking status (id + name) on the customer tracking page and the seller order page */
+.trk-ship-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 6px; }
+.trk-status {
+  display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;
+  background: var(--brand-soft); color: var(--brand-dark);
+}
+.trk-current { margin: 6px 0; font-size: 0.88rem; }
+.trk-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 10px; font-size: 0.84rem; }
+.trk-meta a { color: var(--brand); font-weight: 600; text-decoration: none; }
+.trk-meta a:hover { text-decoration: underline; }
+.trk-history { list-style: none; margin: 10px 0 0; padding: 0; position: relative; }
+.trk-history li {
+  position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px;
+  padding: 0 0 12px 18px; font-size: 0.86rem;
+}
+.trk-history li::before {
+  content: ""; position: absolute; left: 0; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--line);
+}
+.trk-history li:first-child::before { background: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
+.trk-history li::after { content: ""; position: absolute; left: 3.5px; top: 16px; bottom: 0; width: 1px; background: var(--line); }
+.trk-history li:last-child::after { display: none; }
+.trk-history em { font-style: normal; font-size: 0.74rem; color: var(--ink-soft); }
+.trk-history span, .trk-history small { color: var(--ink-soft); font-size: 0.78rem; }
+.trk-history small { flex-basis: 100%; }

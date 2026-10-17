@@ -4,6 +4,7 @@ import client, { createTicket, getTicketReasons } from "../../api/client";
 import { Loading, ErrorBox, SuccessBox, StatusBadge } from "../../components/Ui";
 import { formatMoney, formatDate } from "../../utils/format";
 import { useStoreSlug } from "../../context/StoreSlugContext";
+import "../../styles/shipment-tracking.css";
 
 export default function TrackOrder() {
   const { token } = useParams();
@@ -145,6 +146,37 @@ export default function TrackOrder() {
               </div>
             ))}
           </div>
+
+          {(order.shipments || []).map((sh, i) => (
+            <section className="checkout-section" key={sh._id || i}>
+              <h2>{order.shipments.length > 1 ? `Shipment ${i + 1}` : "Shipment"}</h2>
+              <div className="trk-ship-head">
+                <strong>{sh.courier_name || "Courier"}</strong>
+                {sh.courier_status?.name && <span className="trk-status">{sh.courier_status.name}</span>}
+              </div>
+              {sh.courier_status?.description && <div className="muted small">{sh.courier_status.description}</div>}
+              <div className="trk-meta">
+                {sh.awb_number && <span>AWB: <strong>{sh.awb_number}</strong></span>}
+                {sh.estimated_delivery && <span>Expected: {formatDate(sh.estimated_delivery)}</span>}
+                {sh.tracking_url && (
+                  <a href={sh.tracking_url} target="_blank" rel="noreferrer">
+                    Live tracking ↗
+                  </a>
+                )}
+              </div>
+              {(sh.status_history || []).length > 0 && (
+                <ol className="trk-history">
+                  {[...sh.status_history].reverse().map((h, idx) => (
+                    <li key={idx}>
+                      <strong>{h.name}</strong>
+                      <span>{formatDate(h.at)}</span>
+                      {h.description && <small>{h.description}</small>}
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </section>
+          ))}
 
           <section className="checkout-section">
             <h2>Items</h2>

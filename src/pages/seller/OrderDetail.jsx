@@ -7,6 +7,7 @@ import ShipModal from "../../components/ShipModal";
 import { useToast } from "../../context/ToastContext";
 import "../../styles/order-detail.css";
 import "../../styles/plugins.css";
+import "../../styles/shipment-tracking.css";
 
 const COURIER_LABELS = {
   delhivery: "Delhivery",
@@ -415,6 +416,24 @@ export default function OrderDetail() {
                     <strong>{sh.courier_name || "Courier"}</strong> · {String(sh.status).replace(/_/g, " ")}
                   </div>
                   <div>AWB: {sh.awb_number}</div>
+                  {sh.courier_status?.name && (
+                    <div className="trk-current">
+                      Courier status: <span className="trk-status">{sh.courier_status.name}</span>
+                      {sh.courier_status.id ? <em className="muted small"> (id {sh.courier_status.id})</em> : null}
+                      {sh.courier_status.description ? <span className="muted small"> · {sh.courier_status.description}</span> : null}
+                    </div>
+                  )}
+                  {(sh.status_history || []).length > 0 && (
+                    <ol className="trk-history">
+                      {[...sh.status_history].reverse().map((h, idx) => (
+                        <li key={idx}>
+                          <strong>{h.name}</strong>
+                          {h.id ? <em>id {h.id}</em> : null}
+                          <span>{formatDate(h.at)}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
                   <div className="order-actions">
                     {sh.tracking_url && (
                       <a href={sh.tracking_url} target="_blank" rel="noreferrer">
