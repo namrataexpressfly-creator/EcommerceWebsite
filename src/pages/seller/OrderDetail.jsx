@@ -8,6 +8,7 @@ import { useToast } from "../../context/ToastContext";
 import "../../styles/order-detail.css";
 import "../../styles/plugins.css";
 import "../../styles/shipment-tracking.css";
+import { visibleStatusHistory, currentCourierStatus } from "../../utils/tracking";
 
 const COURIER_LABELS = {
   delhivery: "Delhivery",
@@ -425,20 +426,14 @@ export default function OrderDetail() {
                     <strong>{sh.courier_name || "Courier"}</strong> · {String(sh.status).replace(/_/g, " ")}
                   </div>
                   <div>AWB: {sh.awb_number}</div>
-                  {sh.courier_status?.name && (
+                  {currentCourierStatus(sh)?.name && (
                     <div className="trk-current">
-                      Tracking status: <span className="trk-status">{sh.courier_status.label || sh.courier_status.name}</span>
-                      <em className="muted small">
-                        {" "}
-                        (courier: {sh.courier_status.name}
-                        {sh.courier_status.id ? `, id ${sh.courier_status.id}` : ""})
-                      </em>
-                      {sh.courier_status.description ? <span className="muted small"> · {sh.courier_status.description}</span> : null}
+                      Tracking status: <span className="trk-status">{currentCourierStatus(sh).label || currentCourierStatus(sh).name}</span>
                     </div>
                   )}
-                  {(sh.status_history || []).length > 0 && (
+                  {visibleStatusHistory(sh.status_history).length > 0 && (
                     <ol className="trk-history">
-                      {[...sh.status_history].reverse().map((h, idx) => (
+                      {[...visibleStatusHistory(sh.status_history)].reverse().map((h, idx) => (
                         <li key={idx}>
                           <strong>{h.label || h.name}</strong>
                           <em>

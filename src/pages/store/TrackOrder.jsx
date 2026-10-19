@@ -5,6 +5,7 @@ import { Loading, ErrorBox, SuccessBox, StatusBadge } from "../../components/Ui"
 import { formatMoney, formatDate } from "../../utils/format";
 import { useStoreSlug } from "../../context/StoreSlugContext";
 import "../../styles/shipment-tracking.css";
+import { visibleStatusHistory, currentCourierStatus } from "../../utils/tracking";
 
 export default function TrackOrder() {
   const { token } = useParams();
@@ -152,9 +153,9 @@ export default function TrackOrder() {
               <h2>{order.shipments.length > 1 ? `Shipment ${i + 1}` : "Shipment"}</h2>
               <div className="trk-ship-head">
                 <strong>{sh.courier_name || "Courier"}</strong>
-                {sh.courier_status?.name && <span className="trk-status">{sh.courier_status.label || sh.courier_status.name}</span>}
+                {currentCourierStatus(sh)?.name && <span className="trk-status">{currentCourierStatus(sh).label || currentCourierStatus(sh).name}</span>}
               </div>
-              {sh.courier_status?.description && <div className="muted small">{sh.courier_status.description}</div>}
+              {currentCourierStatus(sh)?.description && <div className="muted small">{currentCourierStatus(sh).description}</div>}
               <div className="trk-meta">
                 {sh.awb_number && <span>AWB: <strong>{sh.awb_number}</strong></span>}
                 {sh.estimated_delivery && <span>Expected: {formatDate(sh.estimated_delivery)}</span>}
@@ -164,9 +165,9 @@ export default function TrackOrder() {
                   </a>
                 )}
               </div>
-              {(sh.status_history || []).length > 0 && (
+              {visibleStatusHistory(sh.status_history).length > 0 && (
                 <ol className="trk-history">
-                  {[...sh.status_history].reverse().map((h, idx) => (
+                  {[...visibleStatusHistory(sh.status_history)].reverse().map((h, idx) => (
                     <li key={idx}>
                       <strong>{h.label || h.name}</strong>
                       <span>{formatDate(h.at)}</span>
