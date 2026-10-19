@@ -77,6 +77,7 @@ export default function OrderDetail() {
   const [moveError, setMoveError] = useState("");
   const [shipOpen, setShipOpen] = useState(false);
   const [shipments, setShipments] = useState([]);
+  const [shipmentsLoaded, setShipmentsLoaded] = useState(false);
   const [trackingId, setTrackingId] = useState(null);
   const toast = useToast();
 
@@ -84,7 +85,8 @@ export default function OrderDetail() {
     client
       .get(`/seller/shipping/${id}/shipments`)
       .then(({ data: list }) => setShipments(list))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setShipmentsLoaded(true));
 
   const reloadAll = () => {
     client.get(`/seller/orders/${id}`).then(({ data: fresh }) => setData(fresh));
@@ -165,7 +167,13 @@ export default function OrderDetail() {
 
   const { order, customer, store, line_items: items, package: pack, pickup_warehouses: pickups } = data;
   const ship = order.shipment || {};
+  // Offer "Ship order" only while some pickup warehouse of this order has no shipment yet.
+  const activeShipments = shipments.filter((sh) => sh.is_active);
+  const shippedFrom = new Set(activeShipments.map((sh) => String(sh.warehouse_id)));
+  const hasUnshipped = (pickups || []).length === 0 ? activeShipments.length === 0 : pickups.some((w) => !shippedFrom.has(String(w._id)));
   const canShip =
+    shipmentsLoaded &&
+    hasUnshipped &&
     ["pending", "confirmed", "packed", "shipped"].includes(order.status) &&
     ["paid", "cod_pending"].includes(order.payment_status);
   const addr = order.shipping_address || {};
@@ -234,6 +242,7 @@ export default function OrderDetail() {
                   ))
                 )}
                 {["pending", "confirmed", "packed"].includes(order.status) &&
+                  activeShipments.length === 0 &&
                   (changing ? (
                     <div className="od-addr" style={{ marginTop: 8 }}>
                       <select className="input" value={newWarehouse} onChange={(e) => setNewWarehouse(e.target.value)}>
@@ -464,7 +473,8 @@ export default function OrderDetail() {
                 </div>
               ))}
 
-            {(ship.awb_number || ship.courier_partner) && (
+            {/* One tracking only: the courier's tracking above when a shipment exists; otherwise the order's own status timeline. */}
+            {activeShipments.length === 0 && (ship.awb_number || ship.courier_partner) && (
               <div className="od-track-meta">
                 {ship.courier_partner && <div>Courier: {COURIER_LABELS[ship.courier_partner] || ship.courier_partner}</div>}
                 {ship.awb_number && <div>AWB: {ship.awb_number}</div>}
@@ -476,7 +486,7 @@ export default function OrderDetail() {
               </div>
             )}
 
-            {events.length === 0 ? (
+            {activeShipments.length > 0 ? null : events.length === 0 ? (
               <div className="od-empty">No events</div>
             ) : (
               <ol className="od-timeline">
