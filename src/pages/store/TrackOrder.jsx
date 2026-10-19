@@ -152,7 +152,7 @@ export default function TrackOrder() {
               <h2>{order.shipments.length > 1 ? `Shipment ${i + 1}` : "Shipment"}</h2>
               <div className="trk-ship-head">
                 <strong>{sh.courier_name || "Courier"}</strong>
-                {sh.courier_status?.name && <span className="trk-status">{sh.courier_status.name}</span>}
+                {sh.courier_status?.name && <span className="trk-status">{sh.courier_status.label || sh.courier_status.name}</span>}
               </div>
               {sh.courier_status?.description && <div className="muted small">{sh.courier_status.description}</div>}
               <div className="trk-meta">
@@ -168,7 +168,7 @@ export default function TrackOrder() {
                 <ol className="trk-history">
                   {[...sh.status_history].reverse().map((h, idx) => (
                     <li key={idx}>
-                      <strong>{h.name}</strong>
+                      <strong>{h.label || h.name}</strong>
                       <span>{formatDate(h.at)}</span>
                       {h.description && <small>{h.description}</small>}
                     </li>

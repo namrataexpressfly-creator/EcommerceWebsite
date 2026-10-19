@@ -418,8 +418,12 @@ export default function OrderDetail() {
                   <div>AWB: {sh.awb_number}</div>
                   {sh.courier_status?.name && (
                     <div className="trk-current">
-                      Courier status: <span className="trk-status">{sh.courier_status.name}</span>
-                      {sh.courier_status.id ? <em className="muted small"> (id {sh.courier_status.id})</em> : null}
+                      Tracking status: <span className="trk-status">{sh.courier_status.label || sh.courier_status.name}</span>
+                      <em className="muted small">
+                        {" "}
+                        (courier: {sh.courier_status.name}
+                        {sh.courier_status.id ? `, id ${sh.courier_status.id}` : ""})
+                      </em>
                       {sh.courier_status.description ? <span className="muted small"> · {sh.courier_status.description}</span> : null}
                     </div>
                   )}
@@ -427,8 +431,11 @@ export default function OrderDetail() {
                     <ol className="trk-history">
                       {[...sh.status_history].reverse().map((h, idx) => (
                         <li key={idx}>
-                          <strong>{h.name}</strong>
-                          {h.id ? <em>id {h.id}</em> : null}
+                          <strong>{h.label || h.name}</strong>
+                          <em>
+                            {h.name}
+                            {h.id ? ` · id ${h.id}` : ""}
+                          </em>
                           <span>{formatDate(h.at)}</span>
                         </li>
                       ))}
