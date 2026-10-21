@@ -7,6 +7,7 @@ import CustomerLoginModal from "../../components/CustomerLoginModal";
 import AddressSidebar from "../../components/AddressSidebar";
 import { ErrorBox } from "../../components/Ui";
 import { formatMoney } from "../../utils/format";
+import { SHIPPING_CHARGE } from "../../utils/shop";
 import { useStoreSlug } from "../../context/StoreSlugContext";
 import { digitsOnly } from "../../utils/validate";
 
@@ -59,7 +60,7 @@ export default function Checkout() {
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [couponMessage, setCouponMessage] = useState("");
-  const [pricing, setPricing] = useState({ subtotal: null, item_discount: 0, tax: 0 });
+  const [pricing, setPricing] = useState({ subtotal: null, item_discount: 0, tax: 0, shipping: SHIPPING_CHARGE });
 
   const [initError, setInitError] = useState("");
   const [initBlocked, setInitBlocked] = useState(false);
@@ -138,7 +139,7 @@ export default function Checkout() {
       .then(({ data }) => {
         setInitError("");
         setInitBlocked(false);
-        setPricing({ subtotal: data.subtotal, item_discount: data.item_discount || 0, tax: data.tax || 0 });
+        setPricing({ subtotal: data.subtotal, item_discount: data.item_discount || 0, tax: data.tax || 0, shipping: data.shipping ?? SHIPPING_CHARGE });
       })
       .catch((err) => {
         const status = err.response?.status;
@@ -150,7 +151,8 @@ export default function Checkout() {
   const listSubtotal = pricing.subtotal ?? subtotal;
   const itemDiscount = pricing.item_discount;
   const tax = pricing.tax;
-  const shipping = subtotal > 999 ? 0 : 49;
+  // Flat shipping on every order, taken from the server so the total shown is the total charged.
+  const shipping = pricing.shipping ?? SHIPPING_CHARGE;
   const codCharge = paymentMethod === "cod" ? Number(paymentSettings.cod_extra_charge || 0) : 0;
   const total = Math.max(0, listSubtotal - itemDiscount - discount + tax + shipping + codCharge);
 
