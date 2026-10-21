@@ -177,7 +177,7 @@ export default function Landing() {
               <div className="lp-coupon"><span>WELCOME10</span><em>Apply</em></div>
               <div className="lp-line"><span>Subtotal</span><span>₹999</span></div>
               <div className="lp-line"><span>Coupon</span><span>− ₹100</span></div>
-              <div className="lp-line"><span>Shipping</span><span>FREE</span></div>
+              <div className="lp-line"><span>Shipping</span><span>₹49</span></div>
               <div className="lp-line tot"><span>Total</span><b>₹899</b></div>
               <div className="lp-btns"><span className="hot">Pay online</span><span>Cash on delivery</span></div>
             </div>

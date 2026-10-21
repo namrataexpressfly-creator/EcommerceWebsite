@@ -214,7 +214,7 @@ export default function TrackOrder() {
             )}
             <div className="cart-summary-line">
               <span>Shipping</span>
-              <span>{order.shipping === 0 ? "Free" : formatMoney(order.shipping)}</span>
+              <span>{formatMoney(order.shipping)}</span>
             </div>
             <div className="cart-summary-line total">
               <span>Total</span>

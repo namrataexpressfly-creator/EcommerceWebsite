@@ -6,7 +6,7 @@
     "logOut": "लॉग आउट"
   },
   "store": {
-    "freeDelivery": "{{amount}} से ऊपर के ऑर्डर पर मुफ़्त डिलीवरी",
+    "flatShipping": "हर ऑर्डर पर {{amount}} का फ्लैट शिपिंग शुल्क",
     "nav": {
       "shop": "शॉप",
       "trackOrder": "ऑर्डर ट्रैक करें",

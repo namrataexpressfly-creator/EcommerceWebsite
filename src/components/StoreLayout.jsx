@@ -12,7 +12,7 @@ import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { UserIcon, HeartIcon, BagIcon, ChevronDownIcon } from "./Icons";
 import { formatMoney, shadeColor } from "../utils/format";
-import { FREE_SHIPPING_THRESHOLD } from "../utils/shop";
+import { SHIPPING_CHARGE } from "../utils/shop";
 import { getLayoutPreset } from "../utils/layoutPresets";
 import { SOCIAL_LABELS, activeSocialLinks, normalizeSocialUrl } from "../utils/social";
 import { SocialIcon } from "./SocialIcons";
@@ -197,7 +197,7 @@ function StoreNav({ storeName, logoUrl, socialLinks, categories }) {
 
   return (
     <>
-      <div className="announce-bar">{t("store.freeDelivery", { amount: formatMoney(FREE_SHIPPING_THRESHOLD) })}</div>
+      <div className="announce-bar">{t("store.flatShipping", { amount: formatMoney(SHIPPING_CHARGE) })}</div>
       <header className="store-nav">
         <div className="store-nav-inner">
           <button

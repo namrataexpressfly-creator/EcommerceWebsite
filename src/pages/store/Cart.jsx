@@ -5,7 +5,7 @@ import { useCustomerAuth } from "../../context/CustomerAuthContext";
 import CustomerLoginModal from "../../components/CustomerLoginModal";
 import { EmptyState, ErrorBox } from "../../components/Ui";
 import { formatMoney } from "../../utils/format";
-import { FREE_SHIPPING_THRESHOLD } from "../../utils/shop";
+import { SHIPPING_CHARGE } from "../../utils/shop";
 import { useStoreSlug } from "../../context/StoreSlugContext";
 import client, { resolveMediaUrl } from "../../api/client";
 
@@ -43,10 +43,6 @@ export default function Cart() {
       setCheckingStock(false);
     }
   };
-
-  const freeShipping = subtotal > FREE_SHIPPING_THRESHOLD;
-  const shipRemaining = Math.max(0, FREE_SHIPPING_THRESHOLD + 1 - subtotal);
-  const shipProgress = freeShipping ? 100 : Math.min(100, Math.round((subtotal / (FREE_SHIPPING_THRESHOLD + 1)) * 100));
 
   if (items.length === 0) {
     return (
@@ -95,25 +91,15 @@ export default function Cart() {
 
       <div className="cart-summary">
         <h2 className="cart-summary-title">Order summary</h2>
-        <div className="cart-ship">
-          <div className="cart-ship-text">
-            {freeShipping ? (
-              "You've unlocked free delivery"
-            ) : (
-              <>
-                Add <strong>{formatMoney(shipRemaining)}</strong> more for free delivery
-              </>
-            )}
-          </div>
-          <div className="cart-ship-bar">
-            <div style={{ width: `${shipProgress}%` }} />
-          </div>
-        </div>
         <div className="cart-summary-line">
           <span>Subtotal</span>
           <strong>{formatMoney(subtotal)}</strong>
         </div>
-        <p className="muted">Discounts, tax, shipping and coupons are applied at checkout.</p>
+        <div className="cart-summary-line">
+          <span>Shipping</span>
+          <strong>{formatMoney(SHIPPING_CHARGE)}</strong>
+        </div>
+        <p className="muted">Discounts, tax and coupons are applied at checkout.</p>
         <ErrorBox message={stockError} />
         <button className="btn btn-primary btn-block" onClick={handleCheckout} disabled={checkingStock}>
           {checkingStock ? "Checking stock…" : "Proceed to checkout"}

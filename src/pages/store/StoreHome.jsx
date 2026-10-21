@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import client, { getBestSellers, getAllStoreReviews, getStoreFilters, resolveMediaUrl } from "../../api/client";
 import { formatMoney } from "../../utils/format";
-import { FREE_SHIPPING_THRESHOLD } from "../../utils/shop";
+import { SHIPPING_CHARGE } from "../../utils/shop";
 import { Loading, ErrorBox, EmptyState } from "../../components/Ui";
 import HeroSlider from "../../components/HeroSlider";
 import ProductCard from "../../components/ProductCard";
@@ -21,8 +21,8 @@ const FEATURES = [
         <circle cx="17.5" cy="19" r="1.6" />
       </svg>
     ),
-    title: "Free delivery",
-    text: `On orders above ${formatMoney(FREE_SHIPPING_THRESHOLD)}`,
+    title: "Flat-rate delivery",
+    text: `${formatMoney(SHIPPING_CHARGE)} shipping on every order`,
   },
   {
     icon: (

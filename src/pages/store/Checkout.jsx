@@ -516,7 +516,7 @@ export default function Checkout() {
           )}
           <div className="cart-summary-line">
             <span>Shipping</span>
-            <span>{shipping === 0 ? "Free" : formatMoney(shipping)}</span>
+            <span>{formatMoney(shipping)}</span>
           </div>
           {codCharge > 0 && (
             <div className="cart-summary-line">

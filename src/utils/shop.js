@@ -1,5 +1,6 @@
 
-export const FREE_SHIPPING_THRESHOLD = 999;
+// Flat shipping charge on every order (rupees). Keep in sync with SHIPPING_CHARGE in the backend checkoutRoutes.js.
+export const SHIPPING_CHARGE = 49;
 
 export function openThemePreview(storeSlug, theme) {
   if (!storeSlug || !theme) return;

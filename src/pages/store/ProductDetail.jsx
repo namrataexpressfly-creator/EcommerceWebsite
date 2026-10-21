@@ -14,7 +14,7 @@ import ProductCard from "../../components/ProductCard";
 import { Loading, ErrorBox, SuccessBox } from "../../components/Ui";
 import { StarRating, StarInput } from "../../components/StarRating";
 import { formatMoney } from "../../utils/format";
-import { FREE_SHIPPING_THRESHOLD, discountPercent } from "../../utils/shop";
+import { SHIPPING_CHARGE, discountPercent } from "../../utils/shop";
 import { useStoreSlug } from "../../context/StoreSlugContext";
 
 const BESTSELLER_THRESHOLD = 10;
@@ -460,7 +460,7 @@ export default function ProductDetail() {
           )}
 
           <ul className="pdp-assurances">
-            <li>Free delivery on orders above {formatMoney(FREE_SHIPPING_THRESHOLD)}</li>
+            <li>Flat {formatMoney(SHIPPING_CHARGE)} shipping on every order</li>
             <li>Easy returns</li>
             <li>Secure checkout</li>
           </ul>

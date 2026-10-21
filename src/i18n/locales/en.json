@@ -6,7 +6,7 @@
     "logOut": "Log out"
   },
   "store": {
-    "freeDelivery": "Free delivery on orders above {{amount}}",
+    "flatShipping": "Flat {{amount}} shipping on every order",
     "nav": {
       "shop": "Shop",
       "trackOrder": "Track order",
