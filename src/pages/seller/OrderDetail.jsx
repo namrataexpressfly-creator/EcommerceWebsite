@@ -9,6 +9,7 @@ import "../../styles/order-detail.css";
 import "../../styles/plugins.css";
 import "../../styles/shipment-tracking.css";
 import { visibleStatusHistory, currentCourierStatus } from "../../utils/tracking";
+import ShipmentTimeline from "../../components/ShipmentTimeline";
 
 const COURIER_LABELS = {
   delhivery: "Delhivery",
@@ -431,7 +432,8 @@ export default function OrderDetail() {
                       Tracking status: <span className="trk-status">{currentCourierStatus(sh).label || currentCourierStatus(sh).name}</span>
                     </div>
                   )}
-                  {visibleStatusHistory(sh.status_history).length > 0 && (
+                  {(sh.events || []).length > 0 && <ShipmentTimeline shipment={sh} />}
+                  {(sh.events || []).length === 0 && visibleStatusHistory(sh.status_history).length > 0 && (
                     <ol className="trk-history">
                       {[...visibleStatusHistory(sh.status_history)].reverse().map((h, idx) => (
                         <li key={idx}>
