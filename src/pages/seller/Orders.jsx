@@ -16,7 +16,11 @@ const fullAddress = (a) =>
 const canShip = (o) =>
   ["pending", "confirmed", "packed"].includes(o.status) &&
   ["paid", "cod_pending"].includes(o.payment_status) &&
-  !o.shipment?.awb_number;
+  // Once every pickup warehouse has a courier shipment there is nothing left to ship.
+  (o.has_unshipped_pickup !== undefined ? o.has_unshipped_pickup : !o.shipment?.awb_number);
+
+// AWB numbers to show under the actions: courier shipments, or the older single shipment field.
+const awbList = (o) => (o.shipments?.length ? o.shipments.map((s) => s.awb_number).filter(Boolean) : o.shipment?.awb_number ? [o.shipment.awb_number] : []);
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -177,7 +181,11 @@ export default function Orders() {
                         </button>
                       )}
                     </div>
-                    {o.shipment?.awb_number && <div className="muted small">AWB: {o.shipment.awb_number}</div>}
+                    {awbList(o).map((awb) => (
+                      <div className="muted small" key={awb}>
+                        AWB: {awb}
+                      </div>
+                    ))}
                   </td>
                   {/* <td>
                     <select
